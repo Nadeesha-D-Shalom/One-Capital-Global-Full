@@ -146,7 +146,7 @@ const CTA = () => {
       {/* =====================
           CTA SECTION
       ===================== */}
-      <section className="bg-[#f0f4f9] px-4 py-16 sm:px-6">
+      <section id="contact" className="bg-[#f0f4f9] px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <div className="relative overflow-hidden rounded-2xl bg-[#0b1f3a] px-6 py-12 sm:px-12 sm:py-14 shadow-xl">

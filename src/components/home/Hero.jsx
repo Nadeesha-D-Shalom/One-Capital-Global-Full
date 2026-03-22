@@ -67,10 +67,13 @@ const Hero = () => {
                   <i className="fa-solid fa-arrow-right text-xs" />
                 </button>
 
-                <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/25 bg-white/5 px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/15 transition backdrop-blur-sm">
+                <a
+                  href="#contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/25 bg-white/5 px-6 py-3 rounded-xl text-sm font-bold hover:bg-white/15 transition backdrop-blur-sm"
+                >
                   Contact Procurement
                   <i className="fa-solid fa-up-right-from-square text-xs" />
-                </button>
+                </a>
               </div>
 
               {/* Stats Row */}

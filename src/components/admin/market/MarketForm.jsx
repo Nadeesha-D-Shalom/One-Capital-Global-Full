@@ -7,7 +7,8 @@ const MarketForm = ({ form, setForm, handleSubmit, editing, handleCancel }) => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const inputCls = "w-full border border-slate-200 bg-white px-3 py-2.5 rounded-xl text-[13px] text-[#0b1f3a] placeholder-slate-400 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-100 transition";
+  const inputCls =
+    "w-full border border-slate-200 bg-white px-3 py-2.5 rounded-xl text-[13px] text-[#0b1f3a] placeholder-slate-400 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-100 transition";
 
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5">
@@ -19,11 +20,40 @@ const MarketForm = ({ form, setForm, handleSubmit, editing, handleCancel }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-2.5">
-        <input name="name"   placeholder="Commodity"   value={form.name}   onChange={handleChange} className={inputCls} />
-        <input name="price"  placeholder="Price (Rs.)" value={form.price}  onChange={handleChange} className={inputCls} />
-        <input name="change" placeholder="Change (%)"  value={form.change} onChange={handleChange} className={inputCls} />
+        <input
+          name="name"
+          placeholder="Commodity"
+          value={form.name}
+          onChange={handleChange}
+          className={inputCls}
+        />
 
-        <select name="volume" value={form.volume} onChange={handleChange} className={inputCls}>
+        <input
+          name="price"
+          type="number"
+          step="0.01"
+          placeholder="Price (Rs.)"
+          value={form.price}
+          onChange={handleChange}
+          className={inputCls}
+        />
+
+        <input
+          name="change"
+          type="number"
+          step="0.01"
+          placeholder="Change (%)"
+          value={form.change}
+          onChange={handleChange}
+          className={inputCls}
+        />
+
+        <select
+          name="volume"
+          value={form.volume}
+          onChange={handleChange}
+          className={inputCls}
+        >
           <option value="">Select Volume</option>
           <option value="Very High">Very High</option>
           <option value="High">High</option>
@@ -33,6 +63,7 @@ const MarketForm = ({ form, setForm, handleSubmit, editing, handleCancel }) => {
 
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={handleSubmit}
             className="flex-1 flex items-center justify-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-white px-3 py-2.5 rounded-xl text-[12.5px] font-bold transition"
           >
@@ -42,6 +73,7 @@ const MarketForm = ({ form, setForm, handleSubmit, editing, handleCancel }) => {
 
           {editing && (
             <button
+              type="button"
               onClick={handleCancel}
               className="px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-500 hover:text-slate-800 transition"
             >
@@ -53,5 +85,6 @@ const MarketForm = ({ form, setForm, handleSubmit, editing, handleCancel }) => {
     </div>
   );
 };
+
 
 export default MarketForm;

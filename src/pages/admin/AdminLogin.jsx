@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import API_BASE from "../../config/api";
 import {
   faUser,
   faLock,
@@ -20,22 +21,39 @@ const AdminLogin = () => {
     setError("");
   };
 
-  const handleLogin = () => {
-    if (!form.username || !form.password) {
-      setError("Please enter both username and password.");
-      return;
-    }
-
+  const handleLogin = async () => {
     setLoading(true);
-    setTimeout(() => {
-      if (form.username === "admin" && form.password === "admin123") {
-        localStorage.setItem("admin_auth", "true");
+    setError("");
+
+    try {
+      const res = await fetch(
+        `${API_BASE}/routes/api.php/admin/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            login: form.username,
+            password: form.password,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        localStorage.setItem("admin_user", JSON.stringify(data.admin));
         navigate("/admin/dashboard");
       } else {
-        setError("Invalid username or password.");
-        setLoading(false);
+        setError(data.message || "Login failed");
       }
-    }, 700);
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Server error. Check backend.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* Enter key support */
@@ -184,7 +202,9 @@ const AdminLogin = () => {
             </p>
 
           </div>
-
+<p className="text-[11.5px] text-white/25 text-center sm:text-left">
+            © {new Date().getFullYear()} One Capital Global. All rights reserved.
+          </p>
           {/* Footer */}
           <div className="border-t border-white/10 px-6 py-3 flex items-center justify-between">
             <span className="text-[10px] text-gray-600">© 2026 One Capital Global</span>
