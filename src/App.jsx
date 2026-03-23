@@ -5,7 +5,6 @@ import Logistics from "./pages/Logistics";
 import PortfolioPage from "./pages/PortfolioPage";
 import Company from "./pages/Company";
 import Blogs from "./pages/Blogs";
-import Insights from "./pages/Insights";
 import Contact from "./pages/Contact";
 
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -29,7 +28,6 @@ function App() {
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/company" element={<Company />} />
               <Route path="/blogs" element={<Blogs />} />
-              <Route path="/insights" element={<Insights />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </MainLayout>

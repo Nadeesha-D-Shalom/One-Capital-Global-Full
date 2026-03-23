@@ -202,12 +202,16 @@ const AdminLogin = () => {
             </p>
 
           </div>
+<<<<<<< HEAD
 <p className="text-[11.5px] text-white/25 text-center sm:text-left">
             © {new Date().getFullYear()} One Capital Global. All rights reserved.
           </p>
+=======
+          
+>>>>>>> e6c51a6 (version 4.0.0)
           {/* Footer */}
           <div className="border-t border-white/10 px-6 py-3 flex items-center justify-between">
-            <span className="text-[10px] text-gray-600">© 2026 One Capital Global</span>
+            <span className="text-[10px] text-gray-600">© {new Date().getFullYear()} One Capital Global</span>
             <span className="text-[10px] text-gray-600 flex items-center gap-1">
               <FontAwesomeIcon icon={faLock} className="text-[8px]" />
               SSL Encrypted

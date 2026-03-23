@@ -1,4 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
+<<<<<<< HEAD
+=======
+import CTA from "../components/home/CTA"; 
+>>>>>>> e6c51a6 (version 4.0.0)
 
 /* =========================
    SVG ICONS
@@ -187,6 +191,13 @@ const Contact = () => {
           </div>
         </div>
       </section>
+<<<<<<< HEAD
+=======
+
+      {/* ── CTA (before footer) ── */}
+      <CTA />
+
+>>>>>>> e6c51a6 (version 4.0.0)
     </div>
   );
 };

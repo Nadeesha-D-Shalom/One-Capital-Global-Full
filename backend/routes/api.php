@@ -12,6 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/MarketController.php';
+<<<<<<< HEAD
+=======
+require_once __DIR__ . '/../controllers/BlogController.php';
+require_once __DIR__ . '/../controllers/MessageController.php';
+>>>>>>> e6c51a6 (version 4.0.0)
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
@@ -91,6 +96,61 @@ if ($method === 'DELETE' && $path === '/market') {
     exit;
 }
 
+<<<<<<< HEAD
+=======
+// BLOG ROUTES
+if ($method === 'POST' && $path === '/blog') {
+    (new BlogController())->create();
+    exit;
+}
+
+if ($method === 'GET' && $path === '/blog') {
+    (new BlogController())->getAll();
+    exit;
+}
+
+if ($method === 'PUT' && $path === '/blog') {
+    (new BlogController())->update();
+    exit;
+}
+
+if ($method === 'DELETE' && $path === '/blog/delete') {
+    (new BlogController())->delete();
+    exit;
+}
+
+// MESSAGE CRUD
+if ($method === 'GET' && $path === '/messages') {
+    (new MessageController())->getAll();
+    exit;
+}
+
+if ($method === 'POST' && $path === '/messages') {
+    (new MessageController())->create();
+    exit;
+}
+
+if ($method === 'PUT' && $path === '/messages/view') {
+    (new MessageController())->markViewed();
+    exit;
+}
+
+if ($method === 'PUT' && $path === '/messages/trash') {
+    (new MessageController())->moveToTrash();
+    exit;
+}
+
+if ($method === 'PUT' && $path === '/messages/restore') {
+    (new MessageController())->restore();
+    exit;
+}
+
+if ($method === 'DELETE' && $path === '/messages/delete') {
+    (new MessageController())->deleteForever();
+    exit;
+}
+
+>>>>>>> e6c51a6 (version 4.0.0)
 http_response_code(404);
 echo json_encode([
     "success" => false,

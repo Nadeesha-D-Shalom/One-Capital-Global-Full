@@ -34,10 +34,6 @@ const Navbar = () => {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  /* 
-    On the home page "/" the hero has a video background — use transparent → dark on scroll.
-    On all other pages the background is white — always show the solid dark navbar.
-  */
   const isHome = location.pathname === "/";
   const navBg  = isHome
     ? scrolled
@@ -53,12 +49,19 @@ const Navbar = () => {
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${navBg}`}>
         <div className="mx-auto max-w-7xl px-5 sm:px-8 h-[62px] flex items-center justify-between">
 
-          {/* Logo */}
+          {/* Logo + Brand */}
           <Link
             to="/"
-            className="text-[15px] font-extrabold text-white tracking-tight shrink-0 hover:opacity-80 transition"
+            className="flex items-center gap-2.5 shrink-0 hover:opacity-80 transition"
           >
-            One Capital <span className="text-orange-500">Global</span>
+            <img
+              src="./public/logo.png"
+              alt="One Capital Global"
+              className="h-5 w-auto object-contain"
+            />
+            <span className="text-[13px] font-extrabold text-white tracking-tight">
+              One Capital <span className="text-orange-500">Global</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -117,9 +120,20 @@ const Navbar = () => {
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 h-[62px] border-b border-white/10">
-          <span className="text-[14px] font-extrabold text-white">
-            One Capital <span className="text-orange-500">Global</span>
-          </span>
+          <Link
+            to="/"
+            className="flex items-center gap-2 hover:opacity-80 transition"
+            onClick={() => setMenuOpen(false)}
+          >
+            <img
+              src="/logo.png"
+              alt="One Capital Global"
+              className="h-7 w-auto object-contain"
+            />
+            <span className="text-[14px] font-extrabold text-white">
+              One Capital <span className="text-orange-500">Global</span>
+            </span>
+          </Link>
           <button
             onClick={() => setMenuOpen(false)}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/70 hover:bg-white/20 transition text-sm"
