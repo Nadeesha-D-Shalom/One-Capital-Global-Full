@@ -87,10 +87,10 @@ const Footer = () => {
         {/* ── Bottom bar ── */}
         <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-[11.5px] text-white/25 text-center sm:text-left">
-            © 2026 One Capital Global. All rights reserved.
+            © {new Date().getFullYear()} One Capital Global. All rights reserved.
           </p>
           <p className="text-[11px] text-white/20 text-center sm:text-right">
-            Trading involves risk of loss.
+
           </p>
         </div>
 
