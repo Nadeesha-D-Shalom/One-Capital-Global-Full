@@ -13,14 +13,14 @@ const REFRESH_INTERVAL = 5000; // 5 seconds
 
 const DashboardOverview = () => {
   const [counts, setCounts] = useState({
-    market: 0,
+    market:   0,
     messages: 0,
-    unread: 0,
-    blogs: 0,
-    admins: 0,
+    unread:   0,
+    blogs:    0,
+    admins:   0,
   });
-  const [activity, setActivity] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [activity, setActivity]   = useState([]);
+  const [loading, setLoading]     = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [countdown, setCountdown] = useState(REFRESH_INTERVAL / 1000);
 
@@ -31,33 +31,33 @@ const DashboardOverview = () => {
 
     try {
       /* 1. Admins */
-      const adminRes = await fetch(`${API_BASE}/routes/api.php/admin/admins`);
+      const adminRes  = await fetch(`${API_BASE}/routes/api.php/admin/admins`);
       const adminData = await adminRes.json();
       const adminCount = adminData.success ? (adminData.admins?.length ?? 0) : 0;
 
       /* 2. Market items */
-      const marketRes = await fetch(`${API_BASE}/routes/api.php/market`);
+      const marketRes  = await fetch(`${API_BASE}/routes/api.php/market`);
       const marketData = await marketRes.json();
       const marketCount = marketData.success ? (marketData.data?.length ?? 0) : 0;
 
       /* 3. Messages */
-      const msgRes = await fetch(`${API_BASE}/routes/api.php/messages`);
+      const msgRes  = await fetch(`${API_BASE}/routes/api.php/messages`);
       const msgData = await msgRes.json();
-      const allMsgs = msgData.success ? (msgData.data ?? []) : [];
-      const inbox = allMsgs.filter((m) => m.deleted == 0);
+      const allMsgs    = msgData.success ? (msgData.data ?? []) : [];
+      const inbox      = allMsgs.filter((m) => m.deleted == 0);
       const unreadMsgs = inbox.filter((m) => m.viewed == 0);
 
       /* 4. Blogs */
-      const blogRes = await fetch(`${API_BASE}/routes/api.php/blog`);
+      const blogRes  = await fetch(`${API_BASE}/routes/api.php/blog`);
       const blogData = await blogRes.json();
       const blogCount = blogData.success ? (blogData.data?.length ?? 0) : 0;
 
       setCounts({
-        market: marketCount,
+        market:   marketCount,
         messages: inbox.length,
-        unread: unreadMsgs.length,
-        blogs: blogCount,
-        admins: adminCount,
+        unread:   unreadMsgs.length,
+        blogs:    blogCount,
+        admins:   adminCount,
       });
 
       /* Build live activity feed */
@@ -65,14 +65,14 @@ const DashboardOverview = () => {
 
       feed.push({
         text: "Admin dashboard loaded successfully",
-        dot: "text-green-400",
+        dot:  "text-green-400",
         time: "just now",
       });
 
       if (marketCount > 0) {
         feed.push({
           text: `Live Market module active — ${marketCount} commodit${marketCount === 1 ? "y" : "ies"} listed`,
-          dot: "text-blue-400",
+          dot:  "text-blue-400",
           time: "live",
         });
       }
@@ -80,13 +80,13 @@ const DashboardOverview = () => {
       if (unreadMsgs.length > 0) {
         feed.push({
           text: `${unreadMsgs.length} unread message${unreadMsgs.length > 1 ? "s" : ""} waiting in inbox`,
-          dot: "text-orange-400",
+          dot:  "text-orange-400",
           time: "live",
         });
       } else {
         feed.push({
           text: "Inbox is up to date — no unread messages",
-          dot: "text-emerald-400",
+          dot:  "text-emerald-400",
           time: "live",
         });
       }
@@ -94,13 +94,13 @@ const DashboardOverview = () => {
       if (blogCount > 0) {
         feed.push({
           text: `Blog module active — ${blogCount} post${blogCount === 1 ? "" : "s"} in database`,
-          dot: "text-violet-400",
+          dot:  "text-violet-400",
           time: "live",
         });
       } else {
         feed.push({
           text: "Blog module active — no posts created yet",
-          dot: "text-slate-400",
+          dot:  "text-slate-400",
           time: "live",
         });
       }
@@ -108,7 +108,7 @@ const DashboardOverview = () => {
       if (adminCount > 1) {
         feed.push({
           text: `${adminCount} admin accounts registered in the system`,
-          dot: "text-pink-400",
+          dot:  "text-pink-400",
           time: "live",
         });
       }
@@ -148,66 +148,66 @@ const DashboardOverview = () => {
   /* ── Derived data ── */
   const cards = [
     {
-      title: "Market Items",
-      value: counts.market,
-      icon: faChartLine,
-      bg: "bg-blue-50",
-      color: "text-blue-600",
+      title:  "Market Items",
+      value:  counts.market,
+      icon:   faChartLine,
+      bg:     "bg-blue-50",
+      color:  "text-blue-600",
       border: "border-blue-100",
-      sub: "Live commodities",
+      sub:    "Live commodities",
     },
     {
-      title: "Unread Messages",
-      value: counts.unread,
-      icon: faEnvelope,
-      bg: "bg-emerald-50",
-      color: "text-emerald-600",
+      title:  "Unread Messages",
+      value:  counts.unread,
+      icon:   faEnvelope,
+      bg:     "bg-emerald-50",
+      color:  "text-emerald-600",
       border: "border-emerald-100",
-      sub: `${counts.messages} total in inbox`,
+      sub:    `${counts.messages} total in inbox`,
     },
     {
-      title: "Blog Posts",
-      value: counts.blogs,
-      icon: faNewspaper,
-      bg: "bg-orange-50",
-      color: "text-orange-500",
+      title:  "Blog Posts",
+      value:  counts.blogs,
+      icon:   faNewspaper,
+      bg:     "bg-orange-50",
+      color:  "text-orange-500",
       border: "border-orange-100",
-      sub: "Published & drafts",
+      sub:    "Published & drafts",
     },
     {
-      title: "Admins",
-      value: counts.admins,
-      icon: faUserShield,
-      bg: "bg-violet-50",
-      color: "text-violet-600",
+      title:  "Admins",
+      value:  counts.admins,
+      icon:   faUserShield,
+      bg:     "bg-violet-50",
+      color:  "text-violet-600",
       border: "border-violet-100",
-      sub: "Registered accounts",
+      sub:    "Registered accounts",
     },
   ];
 
   const modules = [
     {
-      title: "Live Market Overview",
-      desc: "Add, update, and manage commodity pricing data visible on the public website.",
-      badge: counts.market > 0 ? `${counts.market} items` : "Empty",
+      title:      "Live Market Overview",
+      desc:       "Add, update, and manage commodity pricing data visible on the public website.",
+      badge:      counts.market > 0 ? `${counts.market} items` : "Empty",
       badgeColor: counts.market > 0 ? "bg-blue-50 text-blue-600" : "bg-slate-100 text-slate-400",
     },
     {
-      title: "Messages",
-      desc: "Review customer inquiries, mark as viewed, move to trash, or remove permanently.",
-      badge: counts.unread > 0 ? `${counts.unread} unread` : "All read",
+      title:      "Messages",
+      desc:       "Review customer inquiries, mark as viewed, move to trash, or remove permanently.",
+      badge:      counts.unread > 0 ? `${counts.unread} unread` : "All read",
       badgeColor: counts.unread > 0 ? "bg-amber-50 text-amber-600" : "bg-emerald-50 text-emerald-600",
     },
     {
-      title: "Blogs",
-      desc: "Create, edit, and publish blog posts. Manage categories, excerpts, and cover images.",
-      badge: counts.blogs > 0 ? `${counts.blogs} posts` : "No posts",
+      title:      "Blogs",
+      desc:       "Create, edit, and publish blog posts. Manage categories, excerpts, and cover images.",
+      badge:      counts.blogs > 0 ? `${counts.blogs} posts` : "No posts",
       badgeColor: counts.blogs > 0 ? "bg-orange-50 text-orange-500" : "bg-slate-100 text-slate-400",
     },
     {
-      title: "Admins",
-      desc: "Create, edit, and remove admin accounts. Super admins have full access control.",
-      badge: counts.admins > 0 ? `${counts.admins} accounts` : "None",
+      title:      "Admins",
+      desc:       "Create, edit, and remove admin accounts. Super admins have full access control.",
+      badge:      counts.admins > 0 ? `${counts.admins} accounts` : "None",
       badgeColor: counts.admins > 0 ? "bg-violet-50 text-violet-600" : "bg-slate-100 text-slate-400",
     },
   ];

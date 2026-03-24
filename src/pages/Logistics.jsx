@@ -34,23 +34,23 @@ const Icon = ({ name, className = "w-5 h-5" }) => {
    DATA
 ========================= */
 const services = [
-  { icon: "ship",      title: "Import & Freight Handling",           desc: "End-to-end import management including overseas contract negotiation, loading coordination, freight optimisation, and shipping line management across all major origins." },
-  { icon: "document",  title: "Customs Clearance",                   desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
-  { icon: "warehouse", title: "Warehousing & Storage",               desc: "Ventilated, palletised storage with humidity control protocols and regular batch-quality inspections — preserving commodity integrity from arrival through to market release." },
-  { icon: "truck",     title: "Island-Wide Distribution",            desc: "Active delivery network covering Western, Central, and North-Central provinces — supplying wholesalers, retailers, and institutional buyers with speed and reliability." },
-  { icon: "handshake", title: "Supplier & Contract Management",      desc: "Long-standing relationships with 76+ international partners enable priority loading, forward-booking, pre-agreed annual pricing, and revolving LC-backed supply contracts." },
-  { icon: "chart",     title: "Market Intelligence",                 desc: "Real-time monitoring of domestic wholesale prices, global commodity movements, and seasonal harvest forecasts — enabling proactive procurement and margin protection." },
+  { icon: "ship",      title: "Import & Freight Handling",             desc: "End-to-end import management including overseas contract negotiation, loading coordination, freight optimisation, and shipping line management across all major origins." },
+  { icon: "document",  title: "Customs Clearance",                     desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
+  { icon: "warehouse", title: "Warehousing & Storage",                 desc: "Ventilated, palletised storage with humidity control protocols and regular batch-quality inspections — preserving commodity integrity from arrival through to market release." },
+  { icon: "truck",     title: "Island-Wide Distribution",              desc: "Active delivery network covering Western, Central, and North-Central provinces — supplying wholesalers, retailers, and institutional buyers with speed and reliability." },
+  { icon: "handshake", title: "Supplier & Contract Management",        desc: "Long-standing relationships with 76+ international partners enable priority loading, forward-booking, pre-agreed annual pricing, and revolving LC-backed supply contracts." },
+  { icon: "chart",     title: "Market Intelligence",                   desc: "Real-time monitoring of domestic wholesale prices, global commodity movements, and seasonal harvest forecasts — enabling proactive procurement and margin protection." },
   { icon: "money",     title: "Bridging Finance & Trade Facilitation", desc: "We step in for importers unable to clear consignments — covering customs costs, taking temporary control of goods, and distributing through our network within 14–21 days." },
-  { icon: "seedling",  title: "Local Produce Aggregation",           desc: "Direct procurement from local farmers at harvest peaks across grains, pulses, cashew, maize, and groundnuts — with value addition through grading, sizing, and packing." },
+  { icon: "seedling",  title: "Local Produce Aggregation",             desc: "Direct procurement from local farmers at harvest peaks across grains, pulses, cashew, maize, and groundnuts — with value addition through grading, sizing, and packing." },
 ];
 
 const supplySteps = [
-  { icon: "globe",     label: "Global Sourcing",     sub: "China · India · UAE · Pakistan · 76+ partners" },
-  { icon: "document",  label: "Contract & Docs",     sub: "Pre-shipment review & LC management" },
-  { icon: "anchor",    label: "Freight & Loading",   sub: "FOB terms · Pre-negotiated logistics rates" },
-  { icon: "passport",  label: "Customs Clearance",   sub: "Dedicated agents · Advance duty prep" },
-  { icon: "warehouse", label: "Warehousing",         sub: "Humidity control · Batch QA inspections" },
-  { icon: "truck",     label: "Distribution",        sub: "Western · Central · North-Central provinces" },
+  { icon: "globe",     label: "Global Sourcing",   sub: "China · India · UAE · Pakistan · 76+ partners" },
+  { icon: "document",  label: "Contract & Docs",   sub: "Pre-shipment review & LC management" },
+  { icon: "anchor",    label: "Freight & Loading", sub: "FOB terms · Pre-negotiated logistics rates" },
+  { icon: "passport",  label: "Customs Clearance", sub: "Dedicated agents · Advance duty prep" },
+  { icon: "warehouse", label: "Warehousing",       sub: "Humidity control · Batch QA inspections" },
+  { icon: "truck",     label: "Distribution",      sub: "Western · Central · North-Central provinces" },
 ];
 
 const stats = [
@@ -69,10 +69,10 @@ const origins = [
 ];
 
 const risks = [
-  { icon: "dollar",   title: "Foreign Exchange Fluctuation",        body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
-  { icon: "box",      title: "Storage Losses & Inventory Degradation", body: "Facilities equipped with enhanced ventilation, palletised stacking, humidity controls, and periodic batch-quality assessments. Inventory turnover strategies prevent goods from being held beyond optimal periods." },
-  { icon: "anchor",   title: "Port Delays & Clearance Bottlenecks", body: "Dedicated clearing agents manage end-to-end procedures. Pre-shipment documentation reviewed before vessel arrival, import duties prepared in advance, and priority handling secured via strong logistics partner relationships." },
-  { icon: "trend",    title: "Market Price Volatility",             body: "Diversified sourcing across multiple suppliers, countries, and commodity categories. Real-time monitoring of domestic and global prices. Forward contracts and pre-agreed annual pricing stabilise overall revenue." },
+  { icon: "dollar",  title: "Foreign Exchange Fluctuation",           body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
+  { icon: "box",     title: "Storage Losses & Inventory Degradation", body: "Facilities equipped with enhanced ventilation, palletised stacking, humidity controls, and periodic batch-quality assessments. Inventory turnover strategies prevent goods from being held beyond optimal periods." },
+  { icon: "anchor",  title: "Port Delays & Clearance Bottlenecks",    body: "Dedicated clearing agents manage end-to-end procedures. Pre-shipment documentation reviewed before vessel arrival, import duties prepared in advance, and priority handling secured via strong logistics partner relationships." },
+  { icon: "trend",   title: "Market Price Volatility",                body: "Diversified sourcing across multiple suppliers, countries, and commodity categories. Real-time monitoring of domestic and global prices. Forward contracts and pre-agreed annual pricing stabilise overall revenue." },
 ];
 
 const digitalFeatures = [
@@ -170,14 +170,17 @@ const Logistics = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((item, i) => (
               <FadeIn key={i} delay={i * 70}>
-                <div className="group h-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                  <div className="p-6">
+                {/* KEY FIX: flex flex-col so content fills height and line pins to bottom */}
+                <div className="group flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                  {/* flex-1 pushes the accent line to the very bottom */}
+                  <div className="flex-1 p-6">
                     <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4 text-amber-600">
                       <Icon name={item.icon} className="w-5 h-5" />
                     </div>
                     <h3 className="text-sm font-bold text-[#0b1f3a] mb-2">{item.title}</h3>
                     <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                   </div>
+                  {/* Always sits at the very bottom of the card */}
                   <div className="h-[2px] w-0 bg-amber-500 group-hover:w-full transition-all duration-500" />
                 </div>
               </FadeIn>
@@ -221,13 +224,27 @@ const Logistics = () => {
             title="Import Origins"
             subtitle="Our supply chain spans multiple continents — ensuring diversified sourcing, competitive pricing, and supply continuity regardless of regional disruptions."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-stretch">
             {origins.map((o, i) => (
               <FadeIn key={i} delay={i * 80}>
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                  <div className="text-3xl mb-3">{o.flag}</div>
-                  <h3 className="text-sm font-bold text-[#0b1f3a] mb-1">{o.country}</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">{o.items}</p>
+                {/*
+                  h-full + flex flex-col → all cards same height in each row.
+                  Flag: shown only on mobile (sm:hidden), hidden on desktop (lg+).
+                  On desktop a small inline flag badge is shown next to the country name instead.
+                */}
+                <div className="flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+
+                  {/* Flag — mobile only */}
+                  <div className="sm:hidden text-2xl mb-3 leading-none">{o.flag}</div>
+
+                  {/* Country name row — desktop shows flag inline as a small badge */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="hidden sm:inline-block text-base leading-none">{o.flag}</span>
+                    <h3 className="text-sm font-bold text-[#0b1f3a]">{o.country}</h3>
+                  </div>
+
+                  {/* Items — flex-1 so all cards stretch to same height */}
+                  <p className="flex-1 text-xs text-gray-500 leading-relaxed">{o.items}</p>
                 </div>
               </FadeIn>
             ))}
@@ -243,10 +260,10 @@ const Logistics = () => {
             title="How We Protect Every Shipment"
             subtitle="Every operational risk is addressed through disciplined systems, contractual safeguards, and deep market intelligence built over decades."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
             {risks.map((r, i) => (
               <FadeIn key={i} delay={i * 80}>
-                <div className="flex gap-4 bg-[#f4f7fb] rounded-2xl border border-gray-100 p-5 hover:shadow-md hover:bg-white transition-all duration-300">
+                <div className="flex gap-4 h-full bg-[#f4f7fb] rounded-2xl border border-gray-100 p-5 hover:shadow-md hover:bg-white transition-all duration-300">
                   <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0 mt-0.5 text-amber-600">
                     <Icon name={r.icon} className="w-5 h-5" />
                   </div>
@@ -296,15 +313,15 @@ const Logistics = () => {
             title="Compliance & Standards"
             subtitle="Every logistics operation is conducted in full compliance with Sri Lankan trade regulations, customs law, and ethical business standards."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
             {compliance.map((c, i) => (
               <FadeIn key={i} delay={i * 100}>
-                <div className="rounded-2xl border border-gray-100 bg-gray-50 p-6 text-center hover:shadow-md hover:bg-white transition-all duration-300">
+                <div className="flex flex-col h-full rounded-2xl border border-gray-100 bg-gray-50 p-6 text-center hover:shadow-md hover:bg-white transition-all duration-300">
                   <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mx-auto mb-4 text-amber-600">
                     <Icon name={c.icon} className="w-5 h-5" />
                   </div>
                   <h3 className="text-sm font-bold text-[#0b1f3a] mb-2">{c.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{c.body}</p>
+                  <p className="flex-1 text-sm text-gray-500 leading-relaxed">{c.body}</p>
                 </div>
               </FadeIn>
             ))}

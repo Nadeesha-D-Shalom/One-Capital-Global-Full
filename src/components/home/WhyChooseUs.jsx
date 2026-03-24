@@ -15,7 +15,7 @@ const features = [
     icon: "fa-chart-pie",
     title: "Risk Management",
     desc: "Advanced procurement strategies and market analysis help us minimize volatility and maintain stable pricing.",
-  }
+  },
 ];
 
 /* =========================
@@ -52,7 +52,7 @@ const FadeIn = ({ children, delay = 0 }) => {
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(20px)",
-        transition: `all 0.6s ease ${delay}ms`
+        transition: `all 0.6s ease ${delay}ms`,
       }}
     >
       {children}
@@ -92,10 +92,16 @@ const WhyChooseUs = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {features.map((item, index) => (
             <FadeIn key={index} delay={index * 100}>
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              {/*
+                KEY FIX:
+                - Added `flex flex-col` so the card is a flex column
+                - The orange line uses `mt-auto` to always stick to the bottom
+                - Removed `h-full` from inner div (FadeIn wrapper handles height via grid)
+              */}
+              <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
 
-                {/* Card Body */}
-                <div className="p-6">
+                {/* Card Body — flex-1 pushes line to bottom */}
+                <div className="flex-1 p-6">
 
                   {/* Icon + Title */}
                   <div className="flex items-center gap-3 mb-4">
@@ -111,9 +117,7 @@ const WhyChooseUs = () => {
                   </p>
                 </div>
 
-                
-
-                {/* Bottom Accent Line */}
+                {/* Bottom Accent Line — always at the very bottom of the card */}
                 <div className="h-[2px] w-0 bg-orange-500 group-hover:w-full transition-all duration-500" />
 
               </div>

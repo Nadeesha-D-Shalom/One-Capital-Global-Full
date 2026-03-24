@@ -296,6 +296,7 @@ const Blogs = () => {
         }
       `}</style>
     </section>
+
   );
 };
 

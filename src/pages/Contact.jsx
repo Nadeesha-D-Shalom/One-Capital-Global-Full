@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import CTA from "../components/home/CTA"; 
+import CTA from "../components/home/CTA"; // ← adjust path to wherever your CTA.jsx lives
 
 /* =========================
    SVG ICONS

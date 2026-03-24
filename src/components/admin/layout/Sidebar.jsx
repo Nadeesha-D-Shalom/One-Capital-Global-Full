@@ -80,7 +80,6 @@ const Sidebar = ({ active, setActive, open, setOpen }) => {
           <div>
             <p className="text-[13px] font-extrabold tracking-tight text-white leading-none">
               One Capital <span className="text-orange-500">Global</span>
-              
             </p>
             <p className="text-[11px] text-slate-400 mt-1">Admin Panel</p>
           </div>

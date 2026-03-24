@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../controllers/AdminController.php';
 require_once __DIR__ . '/../controllers/MarketController.php';
+
 require_once __DIR__ . '/../controllers/BlogController.php';
 require_once __DIR__ . '/../controllers/MessageController.php';
+
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
@@ -144,6 +146,7 @@ if ($method === 'DELETE' && $path === '/messages/delete') {
     (new MessageController())->deleteForever();
     exit;
 }
+
 
 http_response_code(404);
 echo json_encode([
