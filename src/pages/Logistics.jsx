@@ -45,7 +45,7 @@ const services = [
 ];
 
 const supplySteps = [
-  { icon: "globe",     label: "Global Sourcing",   sub: "China · India · UAE · Pakistan · 76+ partners" },
+  { icon: "globe",     label: "Global Sourcing",   sub: "20+ countries · 76+ partners" },
   { icon: "document",  label: "Contract & Docs",   sub: "Pre-shipment review & LC management" },
   { icon: "anchor",    label: "Freight & Loading", sub: "FOB terms · Pre-negotiated logistics rates" },
   { icon: "passport",  label: "Customs Clearance", sub: "Dedicated agents · Advance duty prep" },
@@ -60,12 +60,28 @@ const stats = [
   { num: "30",    label: "Days avg. trading cycle" },
 ];
 
+/* ── UPDATED: full country list ── */
 const origins = [
-  { flag: "🇨🇳", country: "China",    items: "Garlic, potatoes, agricultural commodities" },
-  { flag: "🇮🇳", country: "India",    items: "Grains, pulses, spices" },
-  { flag: "🇵🇰", country: "Pakistan", items: "Onions, potatoes, provisions" },
-  { flag: "🇦🇪", country: "UAE",      items: "Re-exports, FMCG goods" },
-  { flag: "🌍",  country: "Others",   items: "Iran, Brazil, Egypt, Uzbekistan, Indonesia & more" },
+  { flag: "🇨🇳", country: "China",       items: "Garlic, potatoes, agricultural commodities" },
+  { flag: "🇸🇬", country: "Singapore",   items: "Re-exports, FMCG goods, refined products" },
+  { flag: "🇮🇳", country: "India",       items: "Basmati rice, spices, pulses, lentils" },
+  { flag: "🇧🇷", country: "Brazil",      items: "Soybean oil, sugar, coffee, grains" },
+  { flag: "🇷🇺", country: "Russia",      items: "Sunflower oil, wheat flour, yellow peas" },
+  { flag: "🇺🇦", country: "Ukraine",     items: "Sunflower oil, wheat, corn, coriander" },
+  { flag: "🇦🇪", country: "UAE",         items: "Re-exports, FMCG, provisions" },
+  { flag: "🇿🇦", country: "South Africa",items: "Maize, sugar, grains" },
+  { flag: "🇦🇷", country: "Argentina",   items: "Soybean oil, wheat, corn, sunflower oil" },
+  { flag: "🇮🇩", country: "Indonesia",   items: "Palm oil, coconut products, spices" },
+  { flag: "🇹🇭", country: "Thailand",    items: "Rice, cassava, rubber, sugar" },
+  { flag: "🇲🇾", country: "Malaysia",    items: "Palm oil (RBD), refined vegetable oils" },
+  { flag: "🇦🇺", country: "Australia",   items: "Chick peas, wheat, canola oil, lentils" },
+  { flag: "🇲🇽", country: "Mexico",      items: "Chick peas, grains, agricultural products" },
+  { flag: "🇷🇴", country: "Romania",     items: "Coriander, sunflower seeds, wheat" },
+  { flag: "🇨🇦", country: "Canada",      items: "Canola oil, yellow peas, red lentils, wheat" },
+  { flag: "🇵🇭", country: "Philippines", items: "Coconut oil, copra products, rice" },
+  { flag: "🇵🇰", country: "Pakistan",    items: "Onions, potatoes, basmati rice, provisions" },
+  { flag: "🇮🇷", country: "Iran",        items: "Pistachios, raisins, dried fruits" },
+  { flag: "🌍",  country: "Central Asia & Eastern Europe", items: "Wheat, corn, sunflower oil, pulses, grains" },
 ];
 
 const risks = [
@@ -139,7 +155,6 @@ const Logistics = () => {
       <div className="bg-[#0b1f3a] px-6 py-16 text-center">
         <FadeIn>
           <p className="text-xs tracking-widest uppercase text-amber-500 font-semibold mb-3">
-            One Capital Global · Operations
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight max-w-2xl mx-auto mb-4">
             Logistics &amp; Services
@@ -170,9 +185,7 @@ const Logistics = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((item, i) => (
               <FadeIn key={i} delay={i * 70}>
-                {/* KEY FIX: flex flex-col so content fills height and line pins to bottom */}
                 <div className="group flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                  {/* flex-1 pushes the accent line to the very bottom */}
                   <div className="flex-1 p-6">
                     <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-4 text-amber-600">
                       <Icon name={item.icon} className="w-5 h-5" />
@@ -180,7 +193,6 @@ const Logistics = () => {
                     <h3 className="text-sm font-bold text-[#0b1f3a] mb-2">{item.title}</h3>
                     <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                   </div>
-                  {/* Always sits at the very bottom of the card */}
                   <div className="h-[2px] w-0 bg-amber-500 group-hover:w-full transition-all duration-500" />
                 </div>
               </FadeIn>
@@ -222,29 +234,17 @@ const Logistics = () => {
           <SectionHeader
             label="Global Sourcing"
             title="Import Origins"
-            subtitle="Our supply chain spans multiple continents — ensuring diversified sourcing, competitive pricing, and supply continuity regardless of regional disruptions."
+            subtitle="Our supply chain spans 20+ countries across Asia, South America, Eastern Europe, Oceania, and beyond — ensuring diversified sourcing, competitive pricing, and supply continuity."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             {origins.map((o, i) => (
-              <FadeIn key={i} delay={i * 80}>
-                {/*
-                  h-full + flex flex-col → all cards same height in each row.
-                  Flag: shown only on mobile (sm:hidden), hidden on desktop (lg+).
-                  On desktop a small inline flag badge is shown next to the country name instead.
-                */}
+              <FadeIn key={i} delay={(i % 4) * 70}>
                 <div className="flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-
-                  {/* Flag — mobile only */}
-                  <div className="sm:hidden text-2xl mb-3 leading-none">{o.flag}</div>
-
-                  {/* Country name row — desktop shows flag inline as a small badge */}
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="hidden sm:inline-block text-base leading-none">{o.flag}</span>
+                    <span className="text-xl leading-none">{o.flag}</span>
                     <h3 className="text-sm font-bold text-[#0b1f3a]">{o.country}</h3>
                   </div>
-
-                  {/* Items — flex-1 so all cards stretch to same height */}
-                  <p className="flex-1 text-xs text-gray-500 leading-relaxed">{o.items}</p>
+                  <p className="flex-1 text-xs text-gray-500 leading-relaxed mt-1">{o.items}</p>
                 </div>
               </FadeIn>
             ))}

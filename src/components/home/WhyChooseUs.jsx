@@ -3,18 +3,33 @@ import React, { useEffect, useRef, useState } from "react";
 const features = [
   {
     icon: "fa-link",
-    title: "Direct Sourcing",
-    desc: "We eliminate intermediaries by sourcing directly from global producers, ensuring competitive pricing and consistent supply.",
+    title: "Direct Global Sourcing",
+    desc: "We eliminate intermediaries by sourcing directly from 76+ international producers across 20+ countries — ensuring competitive pricing, consistent supply, and faster lead times.",
   },
   {
     icon: "fa-shield-halved",
     title: "Global Compliance",
-    desc: "We follow strict regulatory standards, ensuring quality, safety, and full compliance with international trade requirements.",
+    desc: "Full compliance with Sri Lankan customs regulations, import duties, and international trade standards. Every shipment is handled with rigorous documentation and quality assurance.",
   },
   {
     icon: "fa-chart-pie",
     title: "Risk Management",
-    desc: "Advanced procurement strategies and market analysis help us minimize volatility and maintain stable pricing.",
+    desc: "Short 30-day trading cycles, diversified sourcing, forward contracts, and pre-agreed annual pricing minimise market volatility and protect consistent returns.",
+  },
+  {
+    icon: "fa-warehouse",
+    title: "End-to-End Supply Chain",
+    desc: "From overseas contract negotiation and freight to customs clearance, warehousing, and last-mile delivery — every link owned and optimised by our in-house team.",
+  },
+  {
+    icon: "fa-clock-rotate-left",
+    title: "90+ Years of Legacy",
+    desc: "Rooted in a family trading heritage since 1931 and led by Chairman Tishan Goonathilake — decades of market expertise, supplier trust, and operational knowledge.",
+  },
+  {
+    icon: "fa-handshake",
+    title: "Reliable Supply Partner",
+    desc: "Wholesalers, retailers, and institutional buyers across Sri Lanka trust us for consistent product availability — even during global supply disruptions or domestic shortfalls.",
   },
 ];
 
@@ -35,7 +50,6 @@ const useInView = (threshold = 0.1) => {
       },
       { threshold }
     );
-
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [threshold]);
@@ -45,7 +59,6 @@ const useInView = (threshold = 0.1) => {
 
 const FadeIn = ({ children, delay = 0 }) => {
   const [ref, inView] = useInView();
-
   return (
     <div
       ref={ref}
@@ -80,7 +93,6 @@ const WhyChooseUs = () => {
                 </span>
               </h2>
             </div>
-
             <div className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-2 text-xs text-gray-400 shadow-sm">
               <span className="inline-block h-2 w-2 rounded-full bg-orange-400" />
               Trusted · Global Network
@@ -92,34 +104,23 @@ const WhyChooseUs = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {features.map((item, index) => (
             <FadeIn key={index} delay={index * 100}>
-              {/*
-                KEY FIX:
-                - Added `flex flex-col` so the card is a flex column
-                - The orange line uses `mt-auto` to always stick to the bottom
-                - Removed `h-full` from inner div (FadeIn wrapper handles height via grid)
-              */}
               <div className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
 
-                {/* Card Body — flex-1 pushes line to bottom */}
+                {/* Card Body */}
                 <div className="flex-1 p-6">
-
-                  {/* Icon + Title */}
                   <div className="flex items-center gap-3 mb-4">
                     <i className={`fa-solid ${item.icon} text-sm text-[#0b1f3a] group-hover:text-orange-500 transition`} />
                     <h3 className="text-sm font-bold text-[#0b1f3a]">
                       {item.title}
                     </h3>
                   </div>
-
-                  {/* Description */}
                   <p className="text-gray-500 text-sm leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
 
-                {/* Bottom Accent Line — always at the very bottom of the card */}
+                {/* Bottom Accent Line */}
                 <div className="h-[2px] w-0 bg-orange-500 group-hover:w-full transition-all duration-500" />
-
               </div>
             </FadeIn>
           ))}

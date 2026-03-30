@@ -41,7 +41,7 @@ const Footer = () => {
           {/* Brand — full width on mobile */}
           <div className="col-span-2 sm:col-span-2 md:col-span-1">
             <p className="text-[15px] font-extrabold text-white tracking-tight mb-2">
-              One Capital <span className="text-orange-500">Global</span>
+              One Capital <span className="text-[#C8A678]">Global</span>
             </p>
             <p className="text-[12.5px] leading-relaxed text-white/40 max-w-[200px] mb-5">
               Sourcing the world, powering the future.
@@ -86,7 +86,7 @@ const Footer = () => {
 
         {/* ── Bottom bar ── */}
         <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[11.5px] text-white/25 text-center sm:text-left">
+          <p className="text-[11.5px] text-[#C8A678] text-center sm:text-left">
             © {new Date().getFullYear()} One Capital Global. All rights reserved.
           </p>
           <p className="text-[11px] text-white/20 text-center sm:text-right">

@@ -90,14 +90,12 @@ const FadeIn = ({ children, delay = 0 }) => {
 
 /* ============================================================
    SPAM / SCAM DETECTION
-   Returns { isSpam: bool, reason: string }
 ============================================================ */
 const detectSpam = (text, name, email) => {
   const lower = text.toLowerCase();
   const nameL = name.toLowerCase();
   const emailL = email.toLowerCase();
 
-  // 1. Crypto / financial scam keywords
   const cryptoKeywords = [
     "bitcoin", "btc", "ethereum", "eth", "crypto", "wallet", "binance",
     "usdt", "nft", "blockchain", "forex", "binary option", "investment opportunity",
@@ -109,7 +107,6 @@ const detectSpam = (text, name, email) => {
     return { isSpam: true, reason: "This message appears to contain financial scam content and cannot be sent." };
   }
 
-  // 2. Phishing / impersonation patterns
   const phishingPatterns = [
     /\bclick\s+here\b/i,
     /\bverify\s+your\s+account\b/i,
@@ -128,19 +125,16 @@ const detectSpam = (text, name, email) => {
     }
   }
 
-  // 3. Excessive URLs (more than 2 links)
   const urlCount = (text.match(/https?:\/\/\S+/gi) || []).length;
   if (urlCount > 2) {
     return { isSpam: true, reason: "Messages with multiple links are not allowed. Please remove unnecessary URLs." };
   }
 
-  // 4. Suspicious email domains
   const spamEmailDomains = ["tempmail", "guerrillamail", "mailinator", "throwam", "yopmail", "trashmail", "10minutemail", "sharklasers", "dispostable"];
   if (spamEmailDomains.some(d => emailL.includes(d))) {
     return { isSpam: true, reason: "Disposable or temporary email addresses are not accepted." };
   }
 
-  // 5. All caps detection (yelling / bot behaviour)
   const letters = text.replace(/[^a-zA-Z]/g, "");
   if (letters.length > 20) {
     const upperRatio = (text.replace(/[^A-Z]/g, "").length) / letters.length;
@@ -149,15 +143,11 @@ const detectSpam = (text, name, email) => {
     }
   }
 
-  // 6. Repetitive characters (aaaaaaa / !!!!!!!)
   if (/(.)\1{6,}/.test(text)) {
     return { isSpam: true, reason: "Your message contains repeated characters. Please write a clear message." };
   }
 
-  // 7. AI-generated spam signals (generic opener + generic pitch)
-  const aiOpeners = [
-    /^(dear\s+(sir|madam|team|hiring\s+manager)|to\s+whom\s+it\s+may\s+concern|hello\s+there|greetings\s+of\s+the\s+day)/i,
-  ];
+  const aiOpeners = [/^(dear\s+(sir|madam|team|hiring\s+manager)|to\s+whom\s+it\s+may\s+concern|hello\s+there|greetings\s+of\s+the\s+day)/i];
   const aiPitch = [
     /\bwe\s+offer\s+(seo|digital\s+marketing|web\s+design|backlink|lead\s+generation)\b/i,
     /\bboost\s+your\s+(ranking|traffic|sales|revenue)\b/i,
@@ -170,15 +160,8 @@ const detectSpam = (text, name, email) => {
     return { isSpam: true, reason: "Automated marketing or SEO spam messages are not accepted." };
   }
 
-  // 8. Suspicious name patterns (numbers in name, keyboard mashing)
   if (/\d{3,}/.test(nameL) || /(.)\1{3,}/.test(nameL) || nameL.length < 2) {
     return { isSpam: true, reason: "Please enter a valid full name." };
-  }
-
-  // 9. Very short or meaningless messages after spam context
-  const wordCount = text.trim().split(/\s+/).length;
-  if (wordCount < 3) {
-    return { isSpam: false, reason: "" }; // too short is caught by required field validation
   }
 
   return { isSpam: false, reason: "" };
@@ -188,27 +171,20 @@ const detectSpam = (text, name, email) => {
    VALIDATION HELPERS
 ============================================================ */
 const validateEmail = (email) => {
-  // RFC-compliant + blocks obvious fake patterns
   const re = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
   if (!re.test(email)) return false;
-  // Must have at least one dot after @
   const parts = email.split("@");
   if (!parts[1] || !parts[1].includes(".")) return false;
-  // Block test/fake local parts
   const fakeParts = ["test@test", "asdf@", "aaa@", "abc@abc", "example@example", "user@user"];
   if (fakeParts.some(f => email.toLowerCase().startsWith(f.split("@")[0]) && email.toLowerCase().includes(f.split("@")[1]))) return false;
   return true;
 };
 
 const validatePhone = (phone) => {
-  if (!phone.trim()) return true; // optional field
-  // Allow: +94XXXXXXXXX, 07XXXXXXXX, +1-XXX-XXX-XXXX, international formats
+  if (!phone.trim()) return true;
   const cleaned = phone.replace(/[\s\-().]/g, "");
-  // Must be digits and optional leading +
   if (!/^\+?[0-9]{7,15}$/.test(cleaned)) return false;
-  // Block obviously fake numbers (all same digit)
   if (/^(\+?\d)\1{6,}$/.test(cleaned)) return false;
-  // Block sequential spam: 1234567890
   const digits = cleaned.replace(/^\+/, "");
   const isSequential = "0123456789012345678901234567890".includes(digits) ||
     "9876543210987654321098765432109".includes(digits);
@@ -235,20 +211,22 @@ const FloatField = ({
 
   const baseInput = "w-full bg-[#f9fafb] border rounded-xl text-sm text-[#0b1f3a] transition-all duration-200 outline-none focus:ring-1 disabled:opacity-60 disabled:cursor-not-allowed placeholder-transparent";
   const borderClass = focused
-    ? "border-orange-400 ring-orange-100 shadow-sm"
+    ? "border-[#C8A678] ring-[#C8A678]/10 shadow-sm"
     : "border-gray-200";
 
   return (
     <div className="relative">
-      {/* Icon */}
       <span
         className="absolute left-3.5 text-gray-400 pointer-events-none transition-colors duration-200"
-        style={{ top: multiline ? "1.1rem" : "50%", transform: multiline ? "none" : "translateY(-50%)", color: focused ? "#f97316" : undefined }}
+        style={{ 
+          top: multiline ? "1.1rem" : "50%", 
+          transform: multiline ? "none" : "translateY(-50%)", 
+          color: focused ? "#C8A678" : undefined 
+        }}
       >
         <IconComponent />
       </span>
 
-      {/* Floating Label */}
       <label
         htmlFor={name}
         style={{
@@ -258,7 +236,7 @@ const FloatField = ({
           transform: lifted ? "none" : multiline ? "none" : "translateY(-50%)",
           fontSize: lifted ? "0.65rem" : "0.8rem",
           fontWeight: lifted ? "600" : "400",
-          color: lifted ? (focused ? "#f97316" : "#6b7280") : "#9ca3af",
+          color: lifted ? (focused ? "#C8A678" : "#6b7280") : "#9ca3af",
           background: lifted ? "white" : "transparent",
           padding: lifted ? "0 0.25rem" : "0",
           borderRadius: "4px",
@@ -268,7 +246,7 @@ const FloatField = ({
           whiteSpace: "nowrap",
         }}
       >
-        {label}{required && <span style={{ color: "#f97316", marginLeft: "2px" }}>*</span>}
+        {label}{required && <span style={{ color: "#C8A678", marginLeft: "2px" }}>*</span>}
       </label>
 
       {multiline ? (
@@ -357,30 +335,25 @@ const CTA = () => {
     setForm({ full_name: "", email: "", phone: "", address: "", message: "" });
   };
 
-  /* ── SUBMIT ── */
   const handleSubmit = async () => {
-    // Required fields
     if (!form.full_name.trim() || !form.email.trim() || !form.message.trim()) {
       setError("Full name, email, and message are required.");
       setIsSpamError(false);
       return;
     }
 
-    // Email validation
     if (!validateEmail(form.email)) {
       setError("Please enter a valid email address (e.g. name@domain.com).");
       setIsSpamError(false);
       return;
     }
 
-    // Phone validation
     if (!validatePhone(form.phone)) {
       setError("Please enter a valid phone number (e.g. +94771234567 or 0771234567).");
       setIsSpamError(false);
       return;
     }
 
-    // Spam / scam detection
     const spamCheck = detectSpam(form.message, form.full_name, form.email);
     if (spamCheck.isSpam) {
       setError(spamCheck.reason);
@@ -442,18 +415,18 @@ const CTA = () => {
         <div className="mx-auto max-w-7xl">
           <FadeIn>
             <div className="relative overflow-hidden rounded-2xl bg-[#0b1f3a] px-6 py-12 sm:px-12 sm:py-14 shadow-xl">
-              <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-orange-500 opacity-10 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-orange-400 opacity-10 blur-2xl" />
+              <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-[#C8A678] opacity-10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-[#C8A678] opacity-10 blur-2xl" />
 
               <div className="relative z-10 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
                 <div className="max-w-xl">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-orange-300">
-                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse inline-block" />
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#C8A678]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#C8A678] animate-pulse inline-block" />
                     Get in Touch
                   </div>
                   <h2 className="text-2xl font-extrabold text-white sm:text-3xl leading-snug">
                     Ready to Optimize Your <br className="hidden sm:block" />
-                    <span className="text-orange-400">Supply Chain?</span>
+                    <span className="text-[#C8A678]">Supply Chain?</span>
                   </h2>
                   <p className="mt-3 text-sm text-gray-400 leading-relaxed">
                     Partner with us for real-time commodity insights, global sourcing, and end-to-end logistics solutions.
@@ -464,14 +437,14 @@ const CTA = () => {
                   <div className="flex gap-6">
                     {[{ value: "20+", label: "Countries" }, { value: "150+", label: "Partners" }, { value: "200+", label: "Routes" }].map((s, i) => (
                       <div key={i} className="text-center">
-                        <div className="text-xl font-extrabold text-orange-400">{s.value}</div>
+                        <div className="text-xl font-extrabold text-[#C8A678]">{s.value}</div>
                         <div className="text-xs text-gray-500 mt-0.5">{s.label}</div>
                       </div>
                     ))}
                   </div>
                   <button
                     onClick={handleOpen}
-                    className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-bold text-white hover:bg-orange-400 transition-all duration-200 shadow-lg shadow-orange-500/20"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#C8A678] px-6 py-3 text-sm font-bold text-white hover:bg-[#b89668] transition-all duration-200 shadow-lg shadow-[#C8A678]/20"
                   >
                     Contact Us <Icon.ArrowRight />
                   </button>
@@ -496,7 +469,7 @@ const CTA = () => {
             {/* Top Bar */}
             <div className="flex items-center justify-between bg-[#0b1f3a] px-6 py-4 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="h-6 w-1 rounded-full bg-orange-500" />
+                <div className="h-6 w-1 rounded-full bg-[#C8A678]" />
                 <h3 className="text-sm font-extrabold text-white">Contact Us</h3>
               </div>
               <button
@@ -592,13 +565,13 @@ const CTA = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-orange-500 py-3 text-sm font-bold text-white hover:bg-orange-400 transition shadow-md shadow-orange-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#C8A678] py-3 text-sm font-bold text-white hover:bg-[#b89668] transition shadow-md shadow-[#C8A678]/20 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {loading ? <><Spinner /> Sending…</> : <><span>Send Message</span><Icon.PaperPlane /></>}
                 </button>
 
                 <p className="text-center text-xs text-gray-400">
-                  Fields marked <span className="text-orange-400 font-bold">*</span> are required
+                  Fields marked <span className="text-[#C8A678] font-bold">*</span> are required
                 </p>
               </div>
             )}
