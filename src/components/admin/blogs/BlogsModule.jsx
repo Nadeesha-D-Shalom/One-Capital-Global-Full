@@ -15,18 +15,23 @@ const CATEGORIES = [
   "Other",
 ];
 
-const STATUSES = ["Published", "Draft"];
+// FIX: store lowercase to match DB enum values exactly
+const STATUSES = ["published", "draft"];
 
 const emptyForm = {
   title: "",
   category: "",
   author: "Admin",
   date: "",
-  status: "Draft",
+  status: "draft",
   excerpt: "",
   content: "",
   image: null,
 };
+
+// FIX: helper to display status with capital first letter in the UI
+const displayStatus = (s) =>
+  s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 
 const BlogsModule = () => {
   const [blogs, setBlogs] = useState([]);
@@ -39,7 +44,6 @@ const BlogsModule = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  /* ── Load blogs from API ── */
   const loadBlogs = async () => {
     try {
       setLoading(true);
@@ -56,7 +60,6 @@ const BlogsModule = () => {
 
   useEffect(() => { loadBlogs(); }, []);
 
-  /* ── Open new form ── */
   const openNew = () => {
     setForm({
       ...emptyForm,
@@ -68,59 +71,53 @@ const BlogsModule = () => {
     setView("form");
   };
 
-  /* ── Open edit form ── */
   const openEdit = (blog) => {
-    setSelected(blog);          // FIX: keep selected in sync for image preview
+    setSelected(blog);
     setForm({
-      title: blog.title || "",
+      title:    blog.title    || "",
       category: blog.category || "",
-      author: blog.author || "Admin",
-      date: (blog.created_at || blog.date || "").split(" ")[0],
-      status: blog.status || "Draft",
-      excerpt: blog.excerpt || "",
-      content: blog.content || "",
-      image: null,
+      author:   blog.author   || "Admin",
+      date:     (blog.created_at || blog.date || "").split(" ")[0],
+      // FIX: normalise to lowercase so select matches option values
+      status:   blog.status?.toLowerCase() || "draft",
+      excerpt:  blog.excerpt  || "",
+      content:  blog.content  || "",
+      image:    null,
     });
     setEditingId(blog.id);
     setError("");
     setView("form");
   };
 
-  /* ── Open detail view ── */
   const openDetail = (blog) => {
     setSelected(blog);
     setView("detail");
   };
 
-  /* ── Save (create or update) ── */
   const handleSave = async () => {
     if (!form.title.trim() || !form.category || !form.content.trim()) {
       setError("Title, category, and content are required.");
       return;
     }
-
     try {
       setSaving(true);
       setError("");
 
       const formData = new FormData();
-      formData.append("title", form.title);
-      formData.append("content", form.content);
-      formData.append("excerpt", form.excerpt);
+      formData.append("title",    form.title);
+      formData.append("content",  form.content);
+      formData.append("excerpt",  form.excerpt);
       formData.append("category", form.category);
-      formData.append("author", form.author || "Admin");
-      formData.append("status", form.status);
+      formData.append("author",   form.author || "Admin");
+      formData.append("status",   form.status);   // already lowercase
 
       if (form.image) formData.append("image", form.image);
+      if (editingId)  formData.append("id",    editingId);
 
-      // If editing, append id so backend can UPDATE instead of INSERT
-      if (editingId) formData.append("id", editingId);
-
-      const res = await fetch(`${API_BASE}/routes/api.php/blog`, {
-        method: editingId ? "POST" : "POST", // backend uses POST for both; id presence signals update
+      const res  = await fetch(`${API_BASE}/routes/api.php/blog`, {
+        method: "POST",
         body: formData,
       });
-
       const data = await res.json();
 
       if (data.success) {
@@ -138,14 +135,12 @@ const BlogsModule = () => {
     }
   };
 
-  /* ── Delete ── */
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`${API_BASE}/routes/api.php/blog/delete?id=${id}`, {
+      const res  = await fetch(`${API_BASE}/routes/api.php/blog/delete?id=${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
-
       if (data.success) {
         await loadBlogs();
         if (selected?.id === id) { setSelected(null); setView("list"); }
@@ -161,15 +156,23 @@ const BlogsModule = () => {
   const inputCls = "w-full border border-slate-200 bg-white px-3 py-2.5 rounded-xl text-[12.5px] text-[#0b1f3a] placeholder-slate-400 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-100 transition";
   const labelCls = "text-[11px] font-semibold text-slate-500 mb-1 block";
 
-  const published = blogs.filter((b) => b.status === "Published").length;
-  const drafts = blogs.filter((b) => b.status === "Draft").length;
+  // FIX: case-insensitive counts
+  const publishedCount = blogs.filter((b) => b.status?.toLowerCase() === "published").length;
+  const draftsCount    = blogs.filter((b) => b.status?.toLowerCase() === "draft").length;
 
-  /* ─────────────── RENDER ─────────────── */
+  // FIX: helper for status badge colour — works with any casing
+  const statusBadge = (status) => {
+    const s = status?.toLowerCase();
+    return s === "published"
+      ? "bg-emerald-50 text-emerald-600"
+      : "bg-amber-50 text-amber-600";
+  };
+
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 
-        {/* ── Module Header ── */}
+        {/* Module Header */}
         <div className="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-2.5">
             {(view === "detail" || view === "form") && (
@@ -189,7 +192,7 @@ const BlogsModule = () => {
               </p>
               <p className="text-[11px] text-slate-400 mt-0.5">
                 {view === "list"
-                  ? `${published} published · ${drafts} drafts`
+                  ? `${publishedCount} published · ${draftsCount} drafts`
                   : view === "detail"
                     ? selected?.title
                     : "Fill in the details below"}
@@ -234,9 +237,7 @@ const BlogsModule = () => {
           )}
         </div>
 
-        {/* ══════════════════════
-            LIST VIEW
-        ══════════════════════ */}
+        {/* LIST VIEW */}
         {view === "list" && (
           <div>
             {loading ? (
@@ -289,26 +290,20 @@ const BlogsModule = () => {
                               </div>
                             </div>
                           </td>
-
                           <td className="px-4 py-3.5">
                             <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-[11px] font-medium">
                               {blog.category}
                             </span>
                           </td>
-
                           <td className="px-4 py-3.5 text-[12px] text-slate-500">
                             {blog.created_at ? blog.created_at.split(" ")[0] : blog.date || "—"}
                           </td>
-
                           <td className="px-4 py-3.5">
-                            <span className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold ${blog.status === "Published"
-                                ? "bg-emerald-50 text-emerald-600"
-                                : "bg-amber-50 text-amber-600"
-                              }`}>
-                              {blog.status}
+                            {/* FIX: use statusBadge helper — works regardless of DB casing */}
+                            <span className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold ${statusBadge(blog.status)}`}>
+                              {displayStatus(blog.status)}
                             </span>
                           </td>
-
                           <td className="px-4 py-3.5">
                             <div className="flex gap-1.5">
                               <button
@@ -355,24 +350,19 @@ const BlogsModule = () => {
                           <FontAwesomeIcon icon={faImage} className="text-slate-300 text-2xl" />
                         </div>
                       )}
-
                       <div className="p-4">
                         <div className="flex items-start justify-between gap-2 mb-2">
                           <p className="text-[13px] font-bold text-[#0b1f3a] leading-snug line-clamp-2">
                             {blog.title}
                           </p>
-                          <span className={`shrink-0 px-2 py-0.5 rounded-lg text-[10px] font-semibold ${blog.status === "Published"
-                              ? "bg-emerald-50 text-emerald-600"
-                              : "bg-amber-50 text-amber-600"
-                            }`}>
-                            {blog.status}
+                          {/* FIX: statusBadge helper */}
+                          <span className={`shrink-0 px-2 py-0.5 rounded-lg text-[10px] font-semibold ${statusBadge(blog.status)}`}>
+                            {displayStatus(blog.status)}
                           </span>
                         </div>
-
                         <p className="text-[11.5px] text-slate-400 leading-relaxed line-clamp-2 mb-3">
                           {blog.excerpt}
                         </p>
-
                         <div className="flex items-center gap-2 mb-3">
                           <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">
                             {blog.category}
@@ -381,7 +371,6 @@ const BlogsModule = () => {
                             {blog.created_at ? blog.created_at.split(" ")[0] : blog.date || "—"}
                           </span>
                         </div>
-
                         <div className="flex gap-2">
                           <button
                             onClick={() => openDetail(blog)}
@@ -411,9 +400,7 @@ const BlogsModule = () => {
           </div>
         )}
 
-        {/* ══════════════════════
-            DETAIL VIEW
-        ══════════════════════ */}
+        {/* DETAIL VIEW */}
         {view === "detail" && selected && (
           <div className="p-5 sm:p-6 space-y-4">
             {selected.image_url && (
@@ -423,13 +410,9 @@ const BlogsModule = () => {
                 className="w-full max-h-[420px] object-cover rounded-2xl border border-slate-200"
               />
             )}
-
             <div className="flex flex-wrap gap-2 items-center">
-              <span className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold ${selected.status === "Published"
-                  ? "bg-emerald-50 text-emerald-600"
-                  : "bg-amber-50 text-amber-600"
-                }`}>
-                {selected.status}
+              <span className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold ${statusBadge(selected.status)}`}>
+                {displayStatus(selected.status)}
               </span>
               <span className="flex items-center gap-1 text-[11px] text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg">
                 <FontAwesomeIcon icon={faTag} className="text-[9px]" />
@@ -444,17 +427,14 @@ const BlogsModule = () => {
                 {selected.author}
               </span>
             </div>
-
             <h2 className="text-[16px] font-extrabold text-[#0b1f3a] leading-snug">
               {selected.title}
             </h2>
-
             {selected.excerpt && (
               <p className="text-[12.5px] text-slate-500 leading-relaxed italic border-l-2 border-orange-300 pl-3">
                 {selected.excerpt}
               </p>
             )}
-
             <div className="bg-slate-50 rounded-2xl p-4 sm:p-5">
               <p className="text-[12.5px] text-slate-700 leading-[1.85] whitespace-pre-line">
                 {selected.content}
@@ -463,14 +443,11 @@ const BlogsModule = () => {
           </div>
         )}
 
-        {/* ══════════════════════
-            FORM VIEW (Add / Edit)
-        ══════════════════════ */}
+        {/* FORM VIEW */}
         {view === "form" && (
           <div className="p-5 sm:p-6 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-              {/* Title */}
               <div className="sm:col-span-2">
                 <label className={labelCls}>Title *</label>
                 <input
@@ -481,7 +458,6 @@ const BlogsModule = () => {
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label className={labelCls}>Category *</label>
                 <select
@@ -494,7 +470,6 @@ const BlogsModule = () => {
                 </select>
               </div>
 
-              {/* Status */}
               <div>
                 <label className={labelCls}>Status</label>
                 <select
@@ -502,11 +477,13 @@ const BlogsModule = () => {
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
                   className={inputCls}
                 >
-                  {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  {/* FIX: option values are lowercase to match DB enum */}
+                  {STATUSES.map((s) => (
+                    <option key={s} value={s}>{displayStatus(s)}</option>
+                  ))}
                 </select>
               </div>
 
-              {/* Author */}
               <div>
                 <label className={labelCls}>Author</label>
                 <input
@@ -517,7 +494,6 @@ const BlogsModule = () => {
                 />
               </div>
 
-              {/* Image upload */}
               <div>
                 <label className={labelCls}>
                   {editingId ? "Replace Image (optional)" : "Image"}
@@ -528,7 +504,6 @@ const BlogsModule = () => {
                   onChange={(e) => setForm({ ...form, image: e.target.files[0] || null })}
                   className={inputCls}
                 />
-                {/* Show current image when editing */}
                 {editingId && selected?.image_url && !form.image && (
                   <div className="mt-2 flex items-center gap-2">
                     <img
@@ -541,7 +516,6 @@ const BlogsModule = () => {
                 )}
               </div>
 
-              {/* Excerpt */}
               <div className="sm:col-span-2">
                 <label className={labelCls}>Excerpt</label>
                 <textarea
@@ -553,7 +527,6 @@ const BlogsModule = () => {
                 />
               </div>
 
-              {/* Content */}
               <div className="sm:col-span-2">
                 <label className={labelCls}>Content *</label>
                 <textarea
@@ -593,9 +566,7 @@ const BlogsModule = () => {
         )}
       </div>
 
-      {/* ══════════════════════
-          DELETE CONFIRM MODAL
-      ══════════════════════ */}
+      {/* DELETE CONFIRM MODAL */}
       {deleteConfirm && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"

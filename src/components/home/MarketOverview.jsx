@@ -85,7 +85,7 @@ const MarketOverview = () => {
             <div className="flex items-center gap-3">
               <div className="h-8 w-1 rounded-full bg-orange-500" />
               <h2 className="text-lg sm:text-xl font-extrabold text-[#0b1f3a]">
-                {activeTab === "prices" ? "Our Products" : "Live Market Overview"}
+                {activeTab === "prices" ? "Live Market Overview" : "Our Products"}
               </h2>
             </div>
 

@@ -30,31 +30,32 @@ const portfolioItems = [
     }
 ];
 
+// Updated with ISO country codes for reliable SVG rendering
 const sourceCountries = [
-    { flag: "🇨🇳", name: "China" },
-    { flag: "🇸🇬", name: "Singapore" },
-    { flag: "🇮🇳", name: "India" },
-    { flag: "🇧🇷", name: "Brazil" },
-    { flag: "🇷🇺", name: "Russia" },
-    { flag: "🇺🇦", name: "Ukraine" },
-    { flag: "🇦🇪", name: "UAE" },
-    { flag: "🇿🇦", name: "South Africa" },
-    { flag: "🇦🇷", name: "Argentina" },
-    { flag: "🇮🇩", name: "Indonesia" },
-    { flag: "🇹🇭", name: "Thailand" },
-    { flag: "🇲🇾", name: "Malaysia" },
-    { flag: "🇦🇺", name: "Australia" },
-    { flag: "🇲🇽", name: "Mexico" },
-    { flag: "🇷🇴", name: "Romania" },
-    { flag: "🇨🇦", name: "Canada" },
-    { flag: "🇵🇭", name: "Philippines" },
-    { flag: "🇵🇰", name: "Pakistan" },
-    { flag: "🇮🇷", name: "Iran" },
-    { flag: "🌍",  name: "Central Asia & Eastern Europe" },
+    { code: "CN", name: "China" },
+    { code: "SG", name: "Singapore" },
+    { code: "IN", name: "India" },
+    { code: "BR", name: "Brazil" },
+    { code: "RU", name: "Russia" },
+    { code: "UA", name: "Ukraine" },
+    { code: "AE", name: "UAE" },
+    { code: "ZA", name: "South Africa" },
+    { code: "AR", name: "Argentina" },
+    { code: "ID", name: "Indonesia" },
+    { code: "TH", name: "Thailand" },
+    { code: "MY", name: "Malaysia" },
+    { code: "AU", name: "Australia" },
+    { code: "MX", name: "Mexico" },
+    { code: "RO", name: "Romania" },
+    { code: "CA", name: "Canada" },
+    { code: "PH", name: "Philippines" },
+    { code: "PK", name: "Pakistan" },
+    { code: "IR", name: "Iran" },
+    { code: "UN", name: "Central Asia & Eastern Europe", isRegion: true }, // 'UN' for a globe placeholder
 ];
 
 /* =========================
-   ANIMATION
+   ANIMATION HOOK & COMPONENT
 ========================= */
 const useInView = (threshold = 0.1) => {
     const ref = useRef(null);
@@ -108,12 +109,12 @@ const Portfolio = () => {
                             <div className="h-8 w-1 rounded-full bg-orange-500" />
                             <h2 className="text-xl font-extrabold text-[#0b1f3a] sm:text-2xl">
                                 Our Operations{" "}
-                                <span className="text-sm font-normal text-gray-400">
+                                <span className="block text-sm font-normal text-gray-400 sm:inline sm:ml-2">
                                     Infrastructure & Capabilities
                                 </span>
                             </h2>
                         </div>
-                        <div className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-2 text-xs text-gray-400 shadow-sm">
+                        <div className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-2 text-xs text-gray-400 shadow-sm w-fit">
                             <span className="inline-block h-2 w-2 rounded-full bg-orange-400" />
                             Sri Lanka · Global Markets
                         </div>
@@ -124,10 +125,10 @@ const Portfolio = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-14">
                     {portfolioItems.map((item, index) => (
                         <FadeIn key={index} delay={index * 100}>
-                            <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-
+                            <div className="group relative h-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                                
                                 {/* Card Body */}
-                                <div className="p-6">
+                                <div className="p-6 flex-grow">
                                     <div className="flex items-center gap-3 mb-4">
                                         <i className={`fa-solid ${item.icon} text-sm text-[#0b1f3a] group-hover:text-orange-500 transition`} />
                                         <h3 className="text-sm font-bold text-[#0b1f3a]">
@@ -167,7 +168,7 @@ const Portfolio = () => {
                         <div className="h-8 w-1 rounded-full bg-orange-500" />
                         <h2 className="text-xl font-extrabold text-[#0b1f3a] sm:text-2xl">
                             Where We Source From{" "}
-                            <span className="text-sm font-normal text-gray-400">
+                            <span className="block text-sm font-normal text-gray-400 sm:inline sm:ml-2">
                                 20+ Countries Worldwide
                             </span>
                         </h2>
@@ -179,9 +180,18 @@ const Portfolio = () => {
                         {sourceCountries.map((c, i) => (
                             <div
                                 key={i}
-                                className="inline-flex items-center gap-2 bg-white border border-gray-100 rounded-full px-4 py-2 shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-200"
+                                className="inline-flex items-center gap-3 bg-white border border-gray-100 rounded-full px-4 py-2 shadow-sm hover:shadow-md hover:border-orange-200 transition-all duration-200"
                             >
-                                <span className="text-base leading-none">{c.flag}</span>
+                                {/* SVG Flag from CDN */}
+                                {c.isRegion ? (
+                                    <span className="text-base">🌍</span>
+                                ) : (
+                                    <img 
+                                        src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${c.code}.svg`}
+                                        alt={c.name}
+                                        className="w-5 h-auto rounded-sm object-cover shadow-sm"
+                                    />
+                                )}
                                 <span className="text-xs font-semibold text-[#0b1f3a] whitespace-nowrap">{c.name}</span>
                             </div>
                         ))}

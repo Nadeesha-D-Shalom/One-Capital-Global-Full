@@ -35,7 +35,7 @@ const Icon = ({ name, className = "w-5 h-5" }) => {
 ========================= */
 const services = [
   { icon: "ship",      title: "Import & Freight Handling",             desc: "End-to-end import management including overseas contract negotiation, loading coordination, freight optimisation, and shipping line management across all major origins." },
-  { icon: "document",  title: "Customs Clearance",                     desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
+  { icon: "document",  title: "Customs Clearance",                    desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
   { icon: "warehouse", title: "Warehousing & Storage",                 desc: "Ventilated, palletised storage with humidity control protocols and regular batch-quality inspections — preserving commodity integrity from arrival through to market release." },
   { icon: "truck",     title: "Island-Wide Distribution",              desc: "Active delivery network covering Western, Central, and North-Central provinces — supplying wholesalers, retailers, and institutional buyers with speed and reliability." },
   { icon: "handshake", title: "Supplier & Contract Management",        desc: "Long-standing relationships with 76+ international partners enable priority loading, forward-booking, pre-agreed annual pricing, and revolving LC-backed supply contracts." },
@@ -45,7 +45,7 @@ const services = [
 ];
 
 const supplySteps = [
-  { icon: "globe",     label: "Global Sourcing",   sub: "20+ countries · 76+ partners" },
+  { icon: "globe",    label: "Global Sourcing",   sub: "20+ countries · 76+ partners" },
   { icon: "document",  label: "Contract & Docs",   sub: "Pre-shipment review & LC management" },
   { icon: "anchor",    label: "Freight & Loading", sub: "FOB terms · Pre-negotiated logistics rates" },
   { icon: "passport",  label: "Customs Clearance", sub: "Dedicated agents · Advance duty prep" },
@@ -60,32 +60,32 @@ const stats = [
   { num: "30",    label: "Days avg. trading cycle" },
 ];
 
-/* ── UPDATED: full country list ── */
+/* ── UPDATED: Country list with ISO Codes for SVG flags ── */
 const origins = [
-  { flag: "🇨🇳", country: "China",       items: "Garlic, potatoes, agricultural commodities" },
-  { flag: "🇸🇬", country: "Singapore",   items: "Re-exports, FMCG goods, refined products" },
-  { flag: "🇮🇳", country: "India",       items: "Basmati rice, spices, pulses, lentils" },
-  { flag: "🇧🇷", country: "Brazil",      items: "Soybean oil, sugar, coffee, grains" },
-  { flag: "🇷🇺", country: "Russia",      items: "Sunflower oil, wheat flour, yellow peas" },
-  { flag: "🇺🇦", country: "Ukraine",     items: "Sunflower oil, wheat, corn, coriander" },
-  { flag: "🇦🇪", country: "UAE",         items: "Re-exports, FMCG, provisions" },
-  { flag: "🇿🇦", country: "South Africa",items: "Maize, sugar, grains" },
-  { flag: "🇦🇷", country: "Argentina",   items: "Soybean oil, wheat, corn, sunflower oil" },
-  { flag: "🇮🇩", country: "Indonesia",   items: "Palm oil, coconut products, spices" },
-  { flag: "🇹🇭", country: "Thailand",    items: "Rice, cassava, rubber, sugar" },
-  { flag: "🇲🇾", country: "Malaysia",    items: "Palm oil (RBD), refined vegetable oils" },
-  { flag: "🇦🇺", country: "Australia",   items: "Chick peas, wheat, canola oil, lentils" },
-  { flag: "🇲🇽", country: "Mexico",      items: "Chick peas, grains, agricultural products" },
-  { flag: "🇷🇴", country: "Romania",     items: "Coriander, sunflower seeds, wheat" },
-  { flag: "🇨🇦", country: "Canada",      items: "Canola oil, yellow peas, red lentils, wheat" },
-  { flag: "🇵🇭", country: "Philippines", items: "Coconut oil, copra products, rice" },
-  { flag: "🇵🇰", country: "Pakistan",    items: "Onions, potatoes, basmati rice, provisions" },
-  { flag: "🇮🇷", country: "Iran",        items: "Pistachios, raisins, dried fruits" },
-  { flag: "🌍",  country: "Central Asia & Eastern Europe", items: "Wheat, corn, sunflower oil, pulses, grains" },
+  { code: "CN", country: "China",       items: "Garlic, potatoes, agricultural commodities" },
+  { code: "SG", country: "Singapore",   items: "Re-exports, FMCG goods, refined products" },
+  { code: "IN", country: "India",       items: "Basmati rice, spices, pulses, lentils" },
+  { code: "BR", country: "Brazil",      items: "Soybean oil, sugar, coffee, grains" },
+  { code: "RU", country: "Russia",      items: "Sunflower oil, wheat flour, yellow peas" },
+  { code: "UA", country: "Ukraine",     items: "Sunflower oil, wheat, corn, coriander" },
+  { code: "AE", country: "UAE",         items: "Re-exports, FMCG, provisions" },
+  { code: "ZA", country: "South Africa",items: "Maize, sugar, grains" },
+  { code: "AR", country: "Argentina",   items: "Soybean oil, wheat, corn, sunflower oil" },
+  { code: "ID", country: "Indonesia",   items: "Palm oil, coconut products, spices" },
+  { code: "TH", country: "Thailand",    items: "Rice, cassava, rubber, sugar" },
+  { code: "MY", country: "Malaysia",    items: "Palm oil (RBD), refined vegetable oils" },
+  { code: "AU", country: "Australia",   items: "Chick peas, wheat, canola oil, lentils" },
+  { code: "MX", country: "Mexico",      items: "Chick peas, grains, agricultural products" },
+  { code: "RO", country: "Romania",     items: "Coriander, sunflower seeds, wheat" },
+  { code: "CA", country: "Canada",      items: "Canola oil, yellow peas, red lentils, wheat" },
+  { code: "PH", country: "Philippines", items: "Coconut oil, copra products, rice" },
+  { code: "PK", country: "Pakistan",    items: "Onions, potatoes, basmati rice, provisions" },
+  { code: "IR", country: "Iran",        items: "Pistachios, raisins, dried fruits" },
+  { code: "UN", country: "Central Asia & Eastern Europe", items: "Wheat, corn, sunflower oil, pulses, grains", isRegion: true },
 ];
 
 const risks = [
-  { icon: "dollar",  title: "Foreign Exchange Fluctuation",           body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
+  { icon: "dollar",  title: "Foreign Exchange Fluctuation",         body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
   { icon: "box",     title: "Storage Losses & Inventory Degradation", body: "Facilities equipped with enhanced ventilation, palletised stacking, humidity controls, and periodic batch-quality assessments. Inventory turnover strategies prevent goods from being held beyond optimal periods." },
   { icon: "anchor",  title: "Port Delays & Clearance Bottlenecks",    body: "Dedicated clearing agents manage end-to-end procedures. Pre-shipment documentation reviewed before vessel arrival, import duties prepared in advance, and priority handling secured via strong logistics partner relationships." },
   { icon: "trend",   title: "Market Price Volatility",                body: "Diversified sourcing across multiple suppliers, countries, and commodity categories. Real-time monitoring of domestic and global prices. Forward contracts and pre-agreed annual pricing stabilise overall revenue." },
@@ -154,8 +154,6 @@ const Logistics = () => {
       {/* ── HERO ── */}
       <div className="bg-[#0b1f3a] px-6 py-16 text-center">
         <FadeIn>
-          <p className="text-xs tracking-widest uppercase text-amber-500 font-semibold mb-3">
-          </p>
           <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight max-w-2xl mx-auto mb-4">
             Logistics &amp; Services
           </h1>
@@ -180,7 +178,7 @@ const Logistics = () => {
           <SectionHeader
             label="Our Services"
             title="What We Do"
-            subtitle="A fully integrated suite of logistics and trading services — designed to eliminate inefficiencies and deliver consistent product availability across Sri Lanka's commodity markets."
+            subtitle="A fully integrated suite of logistics and trading services — designed to eliminate inefficiencies and deliver consistent product availability."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((item, i) => (
@@ -207,12 +205,12 @@ const Logistics = () => {
           <SectionHeader
             label="Operations"
             title="Our Supply Chain Flow"
-            subtitle="Every shipment is managed end-to-end — from initial supplier negotiation through to wholesale delivery across Sri Lanka."
+            subtitle="Every shipment is managed end-to-end — from initial supplier negotiation through to wholesale delivery."
           />
           <FadeIn delay={100}>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {supplySteps.map((step, i) => (
-                <div key={i} className="relative flex flex-col items-center text-center bg-[#f4f7fb] rounded-2xl p-5 border border-gray-100">
+                <div key={i} className="relative flex flex-col items-center text-center bg-[#f4f7fb] rounded-2xl p-5 border border-gray-100 h-full">
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center">
                     <span className="text-[10px] font-bold text-white">{i + 1}</span>
                   </div>
@@ -228,20 +226,28 @@ const Logistics = () => {
         </div>
       </section>
 
-      {/* ── IMPORT ORIGINS ── */}
+      {/* ── IMPORT ORIGINS (FLAGS FIXED) ── */}
       <section className="px-4 sm:px-6 py-14">
         <div className="max-w-7xl mx-auto">
           <SectionHeader
             label="Global Sourcing"
             title="Import Origins"
-            subtitle="Our supply chain spans 20+ countries across Asia, South America, Eastern Europe, Oceania, and beyond — ensuring diversified sourcing, competitive pricing, and supply continuity."
+            subtitle="Our supply chain spans 20+ countries — ensuring diversified sourcing and competitive pricing."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             {origins.map((o, i) => (
               <FadeIn key={i} delay={(i % 4) * 70}>
                 <div className="flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xl leading-none">{o.flag}</span>
+                  <div className="flex items-center gap-3 mb-2">
+                    {o.isRegion ? (
+                        <div className="w-6 h-4 flex items-center justify-center bg-gray-50 rounded-sm text-sm">🌍</div>
+                    ) : (
+                        <img 
+                            src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${o.code}.svg`}
+                            alt={`${o.country} flag`}
+                            className="w-6 h-auto shadow-sm rounded-sm"
+                        />
+                    )}
                     <h3 className="text-sm font-bold text-[#0b1f3a]">{o.country}</h3>
                   </div>
                   <p className="flex-1 text-xs text-gray-500 leading-relaxed mt-1">{o.items}</p>
@@ -258,7 +264,6 @@ const Logistics = () => {
           <SectionHeader
             label="Risk Management"
             title="How We Protect Every Shipment"
-            subtitle="Every operational risk is addressed through disciplined systems, contractual safeguards, and deep market intelligence built over decades."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
             {risks.map((r, i) => (
@@ -287,7 +292,7 @@ const Logistics = () => {
                 <p className="text-xs font-semibold tracking-widest uppercase text-amber-500 mb-2">Coming Soon</p>
                 <h3 className="text-xl font-bold text-white mb-3">National Commodity Intelligence Platform</h3>
                 <p className="text-sm text-white/60 leading-relaxed">
-                  An integrated online portal aggregating island-wide commodity availability, regional supply levels, live wholesale pricing, harvest forecasts, and logistic bottleneck alerts — giving every market participant real-time visibility to make smarter decisions.
+                  An integrated online portal aggregating island-wide commodity availability and live wholesale pricing.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 w-full lg:w-auto lg:min-w-[300px]">
@@ -311,7 +316,6 @@ const Logistics = () => {
           <SectionHeader
             label="Governance"
             title="Compliance & Standards"
-            subtitle="Every logistics operation is conducted in full compliance with Sri Lankan trade regulations, customs law, and ethical business standards."
           />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
             {compliance.map((c, i) => (
@@ -321,7 +325,7 @@ const Logistics = () => {
                     <Icon name={c.icon} className="w-5 h-5" />
                   </div>
                   <h3 className="text-sm font-bold text-[#0b1f3a] mb-2">{c.title}</h3>
-                  <p className="flex-1 text-sm text-gray-500 leading-relaxed">{c.body}</p>
+                  <p className="flex-1 text-xs text-gray-500 leading-relaxed">{c.body}</p>
                 </div>
               </FadeIn>
             ))}
@@ -335,11 +339,11 @@ const Logistics = () => {
           <p className="text-base font-bold text-white tracking-widest uppercase mb-1">
             One Capital Global (Pvt) Ltd
           </p>
-          <p className="text-xs text-white/40 mb-4">
+          <p className="text-xs text-white/40 mb-4 text-balance">
             14-B5, Monarch Residencies, Colombo 03, Sri Lanka
           </p>
           <div className="h-px w-9 bg-amber-500 mx-auto mb-4" />
-          <p className="text-xs text-white/30 uppercase tracking-widest">
+          <p className="text-[10px] text-white/30 uppercase tracking-widest leading-loose">
             FMCG Import · Trading · Distribution · Commodity Intelligence
           </p>
         </FadeIn>
@@ -349,4 +353,4 @@ const Logistics = () => {
   );
 };
 
-export default Logistics;
+export default React.memo(Logistics);
