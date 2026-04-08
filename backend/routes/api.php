@@ -16,6 +16,7 @@ require_once __DIR__ . '/../controllers/MarketController.php';
 require_once __DIR__ . '/../controllers/BlogController.php';
 require_once __DIR__ . '/../controllers/MessageController.php';
 require_once __DIR__ . '/../controllers/TrackingController.php';
+require_once __DIR__ . '/../controllers/GalleryController.php';
 
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -150,7 +151,6 @@ if ($method === 'DELETE' && $path === '/messages/delete') {
 
 
 // ================= TRACKING =================
-// ================= TRACKING =================
 if ($method === 'POST' && $path === '/tracking') {
     echo json_encode((new TrackingController())->track());
     exit;
@@ -160,6 +160,53 @@ if ($method === 'GET' && $path === '/tracking') {
     echo json_encode((new TrackingController())->getStats());
     exit;
 }
+
+// ================= GALLERY =================
+if ($path === '/gallery') {
+    $controller = new GalleryController();
+
+    if ($method === 'GET') {
+        $controller->getAll();
+        exit;
+    }
+
+    if ($method === 'POST') {
+        $controller->create();
+        exit;
+    }
+
+    if ($method === 'DELETE') {
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                "success" => false,
+                "error" => "ID is required"
+            ]);
+            exit;
+        }
+
+        $controller->delete($id);
+        exit;
+    }
+
+    if ($method === 'PUT') {
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                "success" => false,
+                "error" => "ID is required"
+            ]);
+            exit;
+        }
+
+        $controller->update($id);
+        exit;
+    }
+}
+
+
 
 http_response_code(404);
 echo json_encode([

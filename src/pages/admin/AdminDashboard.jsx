@@ -9,6 +9,8 @@ import MessagesModule from "../../components/admin/messages/MessagesModule";
 import BlogsModule from "../../components/admin/blogs/BlogsModule";
 import PortfolioModule from "../../components/admin/portfolio/PortfolioModule";
 import CountOverview from "../../components/admin/count/CountOverview";
+import GalleryManager from "../../components/admin/gallery/GalleryManager";
+
 
 import AdminProfile from "./AdminProfile";
 import AdminManager from "./AdminManager";
@@ -21,7 +23,8 @@ const VALID_TABS = [
   "blogs",
   "portfolio",
   "profile",
-  "admins"
+  "admins",
+  "gallery",
 ];
 
 const AdminDashboard = () => {
@@ -45,6 +48,7 @@ const AdminDashboard = () => {
     portfolio: "Portfolio",
     profile: "Profile",
     admins: "Admin Management",
+    gallery: "Gallery Management",
   })[active] || "Dashboard", [active]);
 
   return (
@@ -75,6 +79,7 @@ const AdminDashboard = () => {
           {active === "portfolio" && <PortfolioModule />}
           {active === "profile" && <AdminProfile />}
           {active === "admins" && <AdminManager />}
+          {active === "gallery" && <GalleryManager />}
         </main>
       </div>
     </div>

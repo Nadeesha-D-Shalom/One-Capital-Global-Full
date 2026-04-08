@@ -7,7 +7,8 @@ import {
   faLayerGroup,
   faXmark,
   faUserTie,
-  faChartPie
+  faChartPie,
+  faImages,
 } from "@fortawesome/free-solid-svg-icons";
 
 import API_BASE from "../../../config/api";
@@ -17,12 +18,13 @@ const POLL_INTERVAL = 5000;
 /* ================= MENU ================= */
 const BASE_MENU = [
   { key: "dashboard", label: "Dashboard", icon: faLayerGroup },
-  { key: "count", label: "Page Engagement", icon: faChartPie }, // NEW
+  // { key: "count", label: "Page Engagement", icon: faChartPie }, // NEW
   { key: "market", label: "Live Market", icon: faChartLine },
   { key: "admins", label: "Admin Manager", icon: faUserTie },
   { key: "blogs", label: "Blogs", icon: faNewspaper },
+  { key: "gallery", label: "Gallery", icon: faImages },
   { key: "messages", label: "Messages", icon: faEnvelope },
-];
+];  
 
 const Sidebar = ({ active, setActive, open, setOpen }) => {
   const [unread, setUnread] = useState(0);

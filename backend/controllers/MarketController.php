@@ -17,23 +17,8 @@ class MarketController
 
     public function create()
     {
-        $input = json_decode(file_get_contents("php://input"), true);
-
-        if (!$input) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Invalid input"
-            ]);
-            return;
-        }
-
-        $model = new Market();
-        $ok = $model->create($input);
-
-        echo json_encode([
-            "success" => $ok,
-            "message" => $ok ? "Market item created successfully" : "Database insert failed"
-        ]);
+        $input = json_decode(file_get_contents("php://input"),true);
+        
     }
 
     public function update()
