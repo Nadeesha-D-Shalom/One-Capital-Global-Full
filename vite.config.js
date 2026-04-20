@@ -1,10 +1,22 @@
+// import { defineConfig } from 'vite'
+// import react from '@vitejs/plugin-react'
+
+// export default defineConfig({
+//   base: "/OneCapitalGlobal/",
+//   plugins: [react()],
+//   server: {
+//     open: true
+//   }
+// })
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: "/OneCapitalGlobal/",
+  base: "/",
   plugins: [react()],
   server: {
     open: true
   }
 })
+

@@ -34,74 +34,118 @@ const Icon = ({ name, className = "w-5 h-5" }) => {
    DATA
 ========================= */
 const services = [
-  { icon: "ship",      title: "Import & Freight Handling",             desc: "End-to-end import management including overseas contract negotiation, loading coordination, freight optimisation, and shipping line management across all major origins." },
-  { icon: "document",  title: "Customs Clearance",                    desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
-  { icon: "warehouse", title: "Warehousing & Storage",                 desc: "Ventilated, palletised storage with humidity control protocols and regular batch-quality inspections — preserving commodity integrity from arrival through to market release." },
-  { icon: "truck",     title: "Island-Wide Distribution",              desc: "Active delivery network covering Western, Central, and North-Central provinces — supplying wholesalers, retailers, and institutional buyers with speed and reliability." },
-  { icon: "handshake", title: "Supplier & Contract Management",        desc: "Long-standing relationships with 76+ international partners enable priority loading, forward-booking, pre-agreed annual pricing, and revolving LC-backed supply contracts." },
-  { icon: "chart",     title: "Market Intelligence",                   desc: "Real-time monitoring of domestic wholesale prices, global commodity movements, and seasonal harvest forecasts — enabling proactive procurement and margin protection." },
-  { icon: "money",     title: "Bridging Finance & Trade Facilitation", desc: "We step in for importers unable to clear consignments — covering customs costs, taking temporary control of goods, and distributing through our network within 14–21 days." },
-  { icon: "seedling",  title: "Local Produce Aggregation",             desc: "Direct procurement from local farmers at harvest peaks across grains, pulses, cashew, maize, and groundnuts — with value addition through grading, sizing, and packing." },
+  { icon: "ship", title: "Import & Freight Handling", desc: "End-to-end import management including overseas contract negotiation, loading coordination, freight optimisation, and shipping line management across all major origins." },
+  { icon: "document", title: "Customs Clearance", desc: "Dedicated clearing agents handle all documentation end-to-end. Pre-shipment docs reviewed before vessel arrival and import duty payments prepared in advance to eliminate delays." },
+  { icon: "warehouse", title: "Warehousing & Storage", desc: "Ventilated, palletised storage with humidity control protocols and regular batch-quality inspections — preserving commodity integrity from arrival through to market release." },
+  { icon: "truck", title: "Island-Wide Distribution", desc: "Active delivery network covering Western, Central, and North-Central provinces — supplying wholesalers, retailers, and institutional buyers with speed and reliability." },
+  { icon: "handshake", title: "Supplier & Contract Management", desc: "Long-standing relationships with 76+ international partners enable priority loading, forward-booking, pre-agreed annual pricing, and revolving LC-backed supply contracts." },
+  { icon: "chart", title: "Market Intelligence", desc: "Real-time monitoring of domestic wholesale prices, global commodity movements, and seasonal harvest forecasts — enabling proactive procurement and margin protection." },
+  { icon: "money", title: "Bridging Finance & Trade Facilitation", desc: "We step in for importers unable to clear consignments — covering customs costs, taking temporary control of goods, and distributing through our network within 14–21 days." },
+  { icon: "seedling", title: "Local Produce Aggregation", desc: "Direct procurement from local farmers at harvest peaks across grains, pulses, cashew, maize, and groundnuts — with value addition through grading, sizing, and packing." },
 ];
 
 const supplySteps = [
-  { icon: "globe",    label: "Global Sourcing",   sub: "20+ countries · 76+ partners" },
-  { icon: "document",  label: "Contract & Docs",   sub: "Pre-shipment review & LC management" },
-  { icon: "anchor",    label: "Freight & Loading", sub: "FOB terms · Pre-negotiated logistics rates" },
-  { icon: "passport",  label: "Customs Clearance", sub: "Dedicated agents · Advance duty prep" },
-  { icon: "warehouse", label: "Warehousing",       sub: "Humidity control · Batch QA inspections" },
-  { icon: "truck",     label: "Distribution",      sub: "Western · Central · North-Central provinces" },
+  { icon: "globe", label: "Global Sourcing", sub: "13+ countries · 76+ partners" },
+  { icon: "document", label: "Contract & Docs", sub: "Pre-shipment review & LC management" },
+  { icon: "anchor", label: "Freight & Loading", sub: "FOB terms · Pre-negotiated logistics rates" },
+  { icon: "passport", label: "Customs Clearance", sub: "Dedicated agents · Advance duty prep" },
+  { icon: "warehouse", label: "Warehousing", sub: "Humidity control · Batch QA inspections" },
+  { icon: "truck", label: "Distribution", sub: "Western · Central · North-Central provinces" },
 ];
 
 const stats = [
-  { num: "76+",   label: "Global Partners" },
+  { num: "76+", label: "Global Partners" },
   { num: "14–21", label: "Days avg. clearance cycle" },
-  { num: "3",     label: "Provinces covered" },
-  { num: "30",    label: "Days avg. trading cycle" },
+  { num: "3", label: "Provinces covered" },
+  { num: "30", label: "Days avg. trading cycle" },
 ];
 
-/* ── UPDATED: Country list with ISO Codes for SVG flags ── */
 const origins = [
-  { code: "CN", country: "China",       items: "Garlic, potatoes, agricultural commodities" },
-  { code: "SG", country: "Singapore",   items: "Re-exports, FMCG goods, refined products" },
-  { code: "IN", country: "India",       items: "Basmati rice, spices, pulses, lentils" },
-  { code: "BR", country: "Brazil",      items: "Soybean oil, sugar, coffee, grains" },
-  { code: "RU", country: "Russia",      items: "Sunflower oil, wheat flour, yellow peas" },
-  { code: "UA", country: "Ukraine",     items: "Sunflower oil, wheat, corn, coriander" },
-  { code: "AE", country: "UAE",         items: "Re-exports, FMCG, provisions" },
-  { code: "ZA", country: "South Africa",items: "Maize, sugar, grains" },
-  { code: "AR", country: "Argentina",   items: "Soybean oil, wheat, corn, sunflower oil" },
-  { code: "ID", country: "Indonesia",   items: "Palm oil, coconut products, spices" },
-  { code: "TH", country: "Thailand",    items: "Rice, cassava, rubber, sugar" },
-  { code: "MY", country: "Malaysia",    items: "Palm oil (RBD), refined vegetable oils" },
-  { code: "AU", country: "Australia",   items: "Chick peas, wheat, canola oil, lentils" },
-  { code: "MX", country: "Mexico",      items: "Chick peas, grains, agricultural products" },
-  { code: "RO", country: "Romania",     items: "Coriander, sunflower seeds, wheat" },
-  { code: "CA", country: "Canada",      items: "Canola oil, yellow peas, red lentils, wheat" },
-  { code: "PH", country: "Philippines", items: "Coconut oil, copra products, rice" },
-  { code: "PK", country: "Pakistan",    items: "Onions, potatoes, basmati rice, provisions" },
-  { code: "IR", country: "Iran",        items: "Pistachios, raisins, dried fruits" },
-  { code: "UN", country: "Central Asia & Eastern Europe", items: "Wheat, corn, sunflower oil, pulses, grains", isRegion: true },
+  {
+    code: "CN",
+    country: "China",
+    items: ["Garlic", "Potato", "Onion", "Fruits & Vegetables"],
+  },
+  {
+    code: "SG",
+    country: "Singapore",
+    items: ["Re-export Break Bulk Vessels — Liquid, Dry & Bulk Cargo Containers", "Sugar", "Wheat", "Cooking Oil & other commodities"],
+  },
+  {
+    code: "AE",
+    country: "UAE",
+    items: ["Re-exports (same as Singapore)"],
+  },
+  {
+    code: "IN",
+    country: "India",
+    items: ["Red Dry Chilies", "Rice", "Grains", "Pulses & Spices"],
+  },
+  {
+    code: "BR",
+    country: "Brazil",
+    items: ["White Crystal Sugar", "Cooking Oil", "Soya Bean", "Grains & Pulses"],
+  },
+  {
+    code: "RU",
+    country: "Russia",
+    items: ["Yellow Split Peas", "Coriander", "Lentils", "Wheat", "Sunflower Oil"],
+  },
+  {
+    code: "UA",
+    country: "Ukraine",
+    items: ["Yellow Split Peas", "Coriander", "Lentils", "Wheat", "Sunflower Oil"],
+  },
+  {
+    code: "ZA",
+    country: "South Africa",
+    items: ["Cloves", "Spices", "Beans & Fruits"],
+  },
+  {
+    code: "ID",
+    country: "Indonesia",
+    items: ["Betel Nut", "Black Pepper", "Coco", "Coconut Related Products", "Dry Fish"],
+  },
+  {
+    code: "TH",
+    country: "Thailand",
+    items: ["Double Refined Confectionery Sugar", "Sugar Liquid", "Vegetables & Fruits", "Sprats & Dry Fish"],
+  },
+  {
+    code: "MY",
+    country: "Malaysia",
+    items: ["All kinds of Cooking Oil & Vegetable Fat"],
+  },
+  {
+    code: "AU",
+    country: "Australia",
+    items: ["Full Cream Milk Powder (Bulk / Cow Fat)", "Green Mung Beans", "Chick Peas", "Yellow Split Peas", "All kinds of Beans & Grains"],
+  },
+  {
+    code: "PK",
+    country: "Pakistan",
+    items: ["Yellow Maize", "Rice", "Wheat Flour", "Potato", "Onion & Fruits"],
+  },
 ];
 
 const risks = [
-  { icon: "dollar",  title: "Foreign Exchange Fluctuation",         body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
-  { icon: "box",     title: "Storage Losses & Inventory Degradation", body: "Facilities equipped with enhanced ventilation, palletised stacking, humidity controls, and periodic batch-quality assessments. Inventory turnover strategies prevent goods from being held beyond optimal periods." },
-  { icon: "anchor",  title: "Port Delays & Clearance Bottlenecks",    body: "Dedicated clearing agents manage end-to-end procedures. Pre-shipment documentation reviewed before vessel arrival, import duties prepared in advance, and priority handling secured via strong logistics partner relationships." },
-  { icon: "trend",   title: "Market Price Volatility",                body: "Diversified sourcing across multiple suppliers, countries, and commodity categories. Real-time monitoring of domestic and global prices. Forward contracts and pre-agreed annual pricing stabilise overall revenue." },
+  { icon: "dollar", title: "Foreign Exchange Fluctuation", body: "Operations structured around short 30-day trading cycles to minimise USD/LKR exposure. USD-based supplier contracts provide predictable cost structures. Forward-booking and staggered procurement further reduce FX risk." },
+  { icon: "box", title: "Storage Losses & Inventory Degradation", body: "Facilities equipped with enhanced ventilation, palletised stacking, humidity controls, and periodic batch-quality assessments. Inventory turnover strategies prevent goods from being held beyond optimal periods." },
+  { icon: "anchor", title: "Port Delays & Clearance Bottlenecks", body: "Dedicated clearing agents manage end-to-end procedures. Pre-shipment documentation reviewed before vessel arrival, import duties prepared in advance, and priority handling secured via strong logistics partner relationships." },
+  { icon: "trend", title: "Market Price Volatility", body: "Diversified sourcing across multiple suppliers, countries, and commodity categories. Real-time monitoring of domestic and global prices. Forward contracts and pre-agreed annual pricing stabilise overall revenue." },
 ];
 
 const digitalFeatures = [
-  { icon: "signal",   label: "Live price feeds" },
-  { icon: "map",      label: "Shortfall zone mapping" },
-  { icon: "bell",     label: "Automated alerts" },
+  { icon: "signal", label: "Live price feeds" },
+  { icon: "map", label: "Shortfall zone mapping" },
+  { icon: "bell", label: "Automated alerts" },
   { icon: "barChart", label: "Analytics dashboards" },
 ];
 
 const compliance = [
-  { icon: "scale", title: "Regulatory Adherence",    body: "Full compliance with Sri Lankan customs regulations, import duties, and all applicable trade and commercial laws." },
-  { icon: "star",  title: "Ethical Standards",        body: "Fairness and transparency in all supplier, customer, and logistics partner dealings — without compromise." },
-  { icon: "eye",   title: "Operational Transparency", body: "Clear contractual terms, open documentation practices, and accountable supply chain management at every stage." },
+  { icon: "scale", title: "Regulatory Adherence", body: "Full compliance with Sri Lankan customs regulations, import duties, and all applicable trade and commercial laws." },
+  { icon: "star", title: "Ethical Standards", body: "Fairness and transparency in all supplier, customer, and logistics partner dealings — without compromise." },
+  { icon: "eye", title: "Operational Transparency", body: "Clear contractual terms, open documentation practices, and accountable supply chain management at every stage." },
 ];
 
 /* =========================
@@ -226,31 +270,34 @@ const Logistics = () => {
         </div>
       </section>
 
-      {/* ── IMPORT ORIGINS (FLAGS FIXED) ── */}
+      {/* ── IMPORT ORIGINS ── */}
       <section className="px-4 sm:px-6 py-14">
         <div className="max-w-7xl mx-auto">
           <SectionHeader
             label="Global Sourcing"
             title="Import Origins"
-            subtitle="Our supply chain spans 20+ countries — ensuring diversified sourcing and competitive pricing."
+            subtitle="Our supply chain spans 13+ countries — ensuring diversified sourcing and competitive pricing across key commodity categories."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             {origins.map((o, i) => (
               <FadeIn key={i} delay={(i % 4) * 70}>
                 <div className="flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-2">
-                    {o.isRegion ? (
-                        <div className="w-6 h-4 flex items-center justify-center bg-gray-50 rounded-sm text-sm">🌍</div>
-                    ) : (
-                        <img 
-                            src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${o.code}.svg`}
-                            alt={`${o.country} flag`}
-                            className="w-6 h-auto shadow-sm rounded-sm"
-                        />
-                    )}
+                  <div className="flex items-center gap-3 mb-3">
+                    <img
+                      src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${o.code}.svg`}
+                      alt={`${o.country} flag`}
+                      className="w-7 h-auto shadow-sm rounded-sm flex-shrink-0"
+                    />
                     <h3 className="text-sm font-bold text-[#0b1f3a]">{o.country}</h3>
                   </div>
-                  <p className="flex-1 text-xs text-gray-500 leading-relaxed mt-1">{o.items}</p>
+                  <ul className="flex-1 space-y-1.5">
+                    {o.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-2">
+                        <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                        <span className="text-[11.5px] text-gray-500 leading-snug">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </FadeIn>
             ))}

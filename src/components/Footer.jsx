@@ -89,8 +89,19 @@ const Footer = () => {
           <p className="text-[11.5px] text-[#C8A678] text-center sm:text-left">
             © {new Date().getFullYear()} One Capital Global. All rights reserved.
           </p>
-          <p className="text-[11px] text-white/20 text-center sm:text-right">
-
+          <p className="text-[11.5px] text-white/40 text-center sm:text-right flex items-center gap-1.5">
+            Powered by{" "}
+            <a
+              href="https://hadesreality.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[#C8A678] hover:text-white border border-[#C8A678]/30 hover:border-[#C8A678]/70 hover:bg-[#C8A678]/10 px-2 py-0.5 rounded-md transition-all duration-200"
+            >
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="opacity-80">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              HadesReality
+            </a>
           </p>
         </div>
 

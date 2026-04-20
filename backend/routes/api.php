@@ -20,21 +20,46 @@ require_once __DIR__ . '/../controllers/GalleryController.php';
 
 
 $method = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'] ?? '/';
-$uri = strtok($uri, '?');
 
+$method = $_SERVER['REQUEST_METHOD'];
+
+// Get the path from the request
 $path = '/';
-$apiPosition = strpos($uri, 'api.php');
 
-if ($apiPosition !== false) {
-    $path = substr($uri, $apiPosition + strlen('api.php'));
-    if ($path === '') {
+// Method 1: Use PATH_INFO if available
+if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
+    $path = $_SERVER['PATH_INFO'];
+} else {
+    // Method 2: Parse REQUEST_URI
+    $uri = $_SERVER['REQUEST_URI'];
+    $queryPos = strpos($uri, '?');
+    if ($queryPos !== false) {
+        $uri = substr($uri, 0, $queryPos);
+    }
+    
+    // Try different ways to extract the path
+    if (preg_match('#/api\.php(/.*)?$#', $uri, $matches)) {
+        $path = $matches[1] ?? '/';
+    } elseif (strpos($uri, '/api.php/') !== false) {
+        $path = substr($uri, strpos($uri, '/api.php/') + 8);
+    } elseif (($pos = strrpos($uri, 'api.php')) !== false) {
+        $path = substr($uri, $pos + 7);
+    }
+    
+    if (empty($path)) {
         $path = '/';
     }
 }
 
+// Normalize the path
+$path = trim($path);
+$path = rtrim($path, "/");
+if ($path === '') {
+    $path = '/';
+}
+
 // ADMIN LOGIN
-if ($method === 'POST' && $path === '/admin/login') {
+if ($method === 'POST' && strpos($path, '/admin/login') === 0) {
     (new AdminController())->login();
     exit;
 }
@@ -57,7 +82,13 @@ if ($method === 'POST' && $path === '/admin/change-password') {
 
 // ADMIN CRUD
 if ($method === 'GET' && $path === '/admin/admins') {
-    (new AdminController())->getAllAdmins();
+    // TEMP DEBUG
+    echo json_encode([
+        "success" => true,
+        "admins" => [["id" => 1, "username" => "test"]],
+        "debug_path" => $path,
+        "debug_uri" => $_SERVER['REQUEST_URI']
+    ]);
     exit;
 }
 

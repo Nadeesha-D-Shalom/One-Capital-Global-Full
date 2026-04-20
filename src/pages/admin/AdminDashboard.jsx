@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Sidebar from "../../components/admin/layout/Sidebar";
 import Header from "../../components/admin/layout/Header";
@@ -10,7 +11,6 @@ import BlogsModule from "../../components/admin/blogs/BlogsModule";
 import PortfolioModule from "../../components/admin/portfolio/PortfolioModule";
 import CountOverview from "../../components/admin/count/CountOverview";
 import GalleryManager from "../../components/admin/gallery/GalleryManager";
-
 
 import AdminProfile from "./AdminProfile";
 import AdminManager from "./AdminManager";
@@ -28,29 +28,77 @@ const VALID_TABS = [
 ];
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   const [active, setActive] = useState(() => {
     const stored = localStorage.getItem("admin_active_tab");
     return VALID_TABS.includes(stored) ? stored : "dashboard";
   });
 
   const [open, setOpen] = useState(false);
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
 
+  // ================= AUTH CHECK =================
+  useEffect(() => {
+    const stored = localStorage.getItem("admin_user");
+
+    if (!stored) {
+      navigate("/admin/login", { replace: true });
+      return;
+    }
+
+    let admin = null;
+
+    try {
+      admin = JSON.parse(stored);
+    } catch (error) {
+      localStorage.removeItem("admin_user");
+      navigate("/admin/login", { replace: true });
+      return;
+    }
+
+    // strict validation
+    if (!admin || typeof admin !== "object" || !admin.id) {
+      localStorage.removeItem("admin_user");
+      navigate("/admin/login", { replace: true });
+      return;
+    }
+
+    setIsAuthChecked(true);
+  }, [navigate]);
+
+  // ================= SAVE TAB =================
   useEffect(() => {
     localStorage.setItem("admin_active_tab", active);
   }, [active]);
 
-  const pageTitle = useMemo(() => ({
-    dashboard: "Dashboard",
-    count: "Page Engagement",
-    market: "Live Market Overview",
-    messages: "Messages",
-    blogs: "Blogs",
-    portfolio: "Portfolio",
-    profile: "Profile",
-    admins: "Admin Management",
-    gallery: "Gallery Management",
-  })[active] || "Dashboard", [active]);
+  // ================= TITLE =================
+  const pageTitle = useMemo(() => {
+    const titles = {
+      dashboard: "Dashboard",
+      count: "Page Engagement",
+      market: "Live Market Overview",
+      messages: "Messages",
+      blogs: "Blogs",
+      portfolio: "Portfolio",
+      profile: "Profile",
+      admins: "Admin Management",
+      gallery: "Gallery Management",
+    };
 
+    return titles[active] || "Dashboard";
+  }, [active]);
+
+  // ================= BLOCK RENDER =================
+  if (!isAuthChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500 text-sm">Loading...</p>
+      </div>
+    );
+  }
+
+  // ================= UI =================
   return (
     <div className="min-h-screen bg-[#f4f7fb] flex">
       <Sidebar
@@ -70,9 +118,7 @@ const AdminDashboard = () => {
 
         <main className="flex-1 p-4 sm:p-5 lg:p-6">
           {active === "dashboard" && <DashboardOverview />}
-
           {active === "count" && <CountOverview />}
-
           {active === "market" && <LiveMarketModule />}
           {active === "messages" && <MessagesModule />}
           {active === "blogs" && <BlogsModule />}

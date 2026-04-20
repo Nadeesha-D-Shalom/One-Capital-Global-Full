@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import API_BASE from "../../config/api";
@@ -17,60 +17,79 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setError("");
   };
 
-  const handleLogin = async () => {
+  const handleLogin = useCallback(async () => {
+    if (!form.username.trim() || !form.password.trim()) {
+      setError("Username and password are required.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     try {
-      const res = await fetch(
-        `${API_BASE}/routes/api.php/admin/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            login: form.username,
-            password: form.password,
-          }),
-        }
-      );
+      const res = await fetch(`${API_BASE}/routes/api.php/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          login: form.username.trim(),
+          password: form.password,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error: ${res.status}`);
+      }
 
       const data = await res.json();
 
       if (data.success) {
         localStorage.setItem("admin_user", JSON.stringify(data.admin));
-        navigate("/admin/dashboard");
+        if (window.location.pathname !== "/admin/dashboard") {
+          navigate("/admin/dashboard", { replace: true });
+        }
       } else {
-        setError(data.message || "Login failed");
+        setError(data.message || "Invalid credentials.");
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Server error. Check backend.");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Server error. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [form, navigate]);
 
-  /* Enter key support */
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") handleLogin();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [form]);
+  }, [handleLogin]);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("admin_user");
+      if (stored) {
+        const admin = JSON.parse(stored);
+        if (admin && admin.id) {
+          // prevent infinite navigation loop
+          if (window.location.pathname !== "/admin/dashboard") {
+            navigate("/admin/dashboard", { replace: true });
+          }
+        }
+      }
+    } catch {
+      localStorage.removeItem("admin_user");
+    }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#060f1e] px-4 py-10 relative overflow-hidden">
-
-      {/* =====================
-          BACKGROUND DESIGN
-      ===================== */}
 
       {/* Grid dots */}
       <div
@@ -92,15 +111,12 @@ const AdminLogin = () => {
       <div className="absolute bottom-8 left-8 w-12 h-12 border-b-2 border-l-2 border-orange-500/30 rounded-bl-xl pointer-events-none" />
       <div className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 border-orange-500/30 rounded-br-xl pointer-events-none" />
 
-      {/* =====================
-          CARD
-      ===================== */}
+      {/* Card */}
       <div
         className="relative z-10 w-full max-w-sm"
         style={{ animation: "cardIn 0.4s ease both" }}
       >
-
-        {/* Top Brand Bar */}
+        {/* Brand bar */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <div className="h-px flex-1 bg-white/10" />
           <span className="text-xs text-gray-500 font-semibold tracking-widest uppercase px-3">
@@ -146,7 +162,8 @@ const AdminLogin = () => {
                 value={form.username}
                 onChange={handleChange}
                 autoComplete="username"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20 transition"
+                disabled={loading}
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20 transition disabled:opacity-50"
               />
             </div>
 
@@ -163,7 +180,8 @@ const AdminLogin = () => {
                 value={form.password}
                 onChange={handleChange}
                 autoComplete="current-password"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20 transition"
+                disabled={loading}
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20 transition disabled:opacity-50"
               />
             </div>
 
@@ -198,31 +216,33 @@ const AdminLogin = () => {
             </button>
 
             <p className="text-center text-[10px] text-gray-600 pt-1">
-              Press <kbd className="bg-white/10 text-gray-400 px-1.5 py-0.5 rounded text-[10px]">Enter</kbd> to sign in
+              Press{" "}
+              <kbd className="bg-white/10 text-gray-400 px-1.5 py-0.5 rounded text-[10px]">
+                Enter
+              </kbd>{" "}
+              to sign in
             </p>
-
           </div>
 
           {/* Footer */}
           <div className="border-t border-white/10 px-6 py-3 flex items-center justify-between">
-            <span className="text-[10px] text-gray-600">© {new Date().getFullYear()} One Capital Global</span>
+            <span className="text-[10px] text-gray-600">
+              © {new Date().getFullYear()} One Capital Global
+            </span>
             <span className="text-[10px] text-gray-600 flex items-center gap-1">
               <FontAwesomeIcon icon={faLock} className="text-[8px]" />
               SSL Encrypted
             </span>
           </div>
-
         </div>
       </div>
 
-      {/* Keyframes */}
       <style>{`
         @keyframes cardIn {
           from { opacity: 0; transform: translateY(20px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
       `}</style>
-
     </div>
   );
 };

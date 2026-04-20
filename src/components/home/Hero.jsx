@@ -1,5 +1,6 @@
 import React from "react";
-import heroVideo from "../../assets/v1.webm";
+import heroVideoMP4 from "../../assets/v2.mp4";     // MUST be MP4 (H.264)
+import heroVideoWebM from "../../assets/v1.webm";   // optional fallback
 
 const Hero = () => {
   return (
@@ -13,15 +14,21 @@ const Hero = () => {
         loop
         muted
         playsInline
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={heroVideo} type="video/mp4" />
+        {/* Mobile-friendly FIRST */}
+        <source src={heroVideoMP4} type="video/mp4" />
+
+        {/* Optional fallback */}
+        <source src={heroVideoWebM} type="video/webm" />
+
+        {/* Fallback text */}
+        Your browser does not support the video tag.
       </video>
 
       {/* =====================
-          DARK OVERLAY (REDUCED OPACITY HERE)
-          CHANGE THIS VALUE IF YOU WANT MORE/LESS DARKNESS
-          CURRENT: /40 (was /60)
+          DARK OVERLAY
       ===================== */}
       <div className="absolute inset-0 bg-[#0b1f3a]/75" />
 
@@ -29,7 +36,7 @@ const Hero = () => {
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#07101a]/70 to-transparent pointer-events-none" />
 
       {/* =====================
-          CONTENT — CENTERED
+          CONTENT
       ===================== */}
       <div className="relative z-10 w-full px-5 sm:px-10 pt-28 pb-16 sm:pt-36 sm:pb-24">
         <div className="max-w-5xl mx-auto text-center">
@@ -62,7 +69,7 @@ const Hero = () => {
             We source high-demand commodities from global markets and deliver them across Sri Lanka through a reliable, end-to-end supply chain.
           </p>
 
-          {/* CTA Buttons */}
+          {/* Buttons */}
           <div
             className="mt-7 flex flex-col sm:flex-row justify-center gap-3"
             style={{ animation: "fadeUp 0.5s ease 0.3s both" }}
@@ -85,7 +92,7 @@ const Hero = () => {
             </a>
           </div>
 
-          {/* Stats Row */}
+          {/* Stats */}
           <div
             className="mt-10 flex flex-wrap justify-center gap-8 sm:gap-10 border-t border-white/15 pt-7"
             style={{ animation: "fadeUp 0.5s ease 0.4s both" }}
@@ -107,7 +114,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Animation keyframes */}
+      {/* Animation */}
       <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(18px); }
@@ -118,5 +125,6 @@ const Hero = () => {
     </section>
   );
 };
+
 
 export default React.memo(Hero);

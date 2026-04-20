@@ -3,9 +3,9 @@
 class Database
 {
     private $host = "localhost";
-    private $db_name = "onecapitaldb";
-    private $username = "root";
-    private $password = "";
+    private $db_name = "onecapit_onecapitaldb";  // onecapitaldb
+    private $username = "onecapit_onecapitaluser";  // root
+    private $password = "@xwd)9[406u#wx,u";   // @xwd)9[406u#wx,u
     private $conn = null;
 
     public function connect()

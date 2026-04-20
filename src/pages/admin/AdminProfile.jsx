@@ -275,8 +275,8 @@ const AdminProfile = () => {
 
                         {/* Status badge */}
                         <div className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold ${admin.status === "active"
-                                ? "bg-green-500/10 border-green-500/30 text-green-400"
-                                : "bg-slate-500/10 border-slate-500/30 text-slate-400"
+                            ? "bg-green-500/10 border-green-500/30 text-green-400"
+                            : "bg-slate-500/10 border-slate-500/30 text-slate-400"
                             }`}>
                             <FontAwesomeIcon icon={admin.status === "active" ? faToggleOn : faToggleOff} />
                             {admin.status === "active" ? "Active" : "Inactive"}
